@@ -1,7 +1,9 @@
+ecto.gen.migration add_fly_types_table
+ecto.gen.migration add_fish_species_table
 ecto.gen.migration add_trips_table
 ecto.gen.migration add_locations_table
 ecto.gen.migration add_location_types_table
 ecto.gen.migration add_people_table
 ecto.gen.migration add_fish_landed_table
-ecto.gen.migration add_fish_species_table
-ecto.gen.migration add_fly_types_table
+ecto.gen.migration add_locations_trips_table
+ecto.gen.migration add_people_trips_table
