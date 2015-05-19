@@ -22,3 +22,9 @@ use Mix.Config
 # here (which is why it is important to import them last).
 #
 #     import_config "#{Mix.env}.exs"
+
+config :diving_into_ecto, DivingIntoEcto.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  database: "diving_into_ecto",
+  username: "postgres",
+  password: "postgres"

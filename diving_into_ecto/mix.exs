@@ -15,7 +15,7 @@ defmodule DivingIntoEcto.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [applications: [:logger],
-     mod: {DivingIntoEcto, []}]
+     mod: {DivingIntoEcto, [:postgrex, :ecto]}]
   end
 
   # Dependencies can be Hex packages:
@@ -28,6 +28,7 @@ defmodule DivingIntoEcto.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [{:postgrex, ">= 0.0.0"},
+     {:ecto, "~> 0.9.0"}]
   end
 end
