@@ -23,8 +23,8 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-config :diving_into_ecto, DivingIntoEcto.Repo,
+config :fishing_spot, FishingSpot.Repo,
   adapter: Ecto.Adapters.Postgres,
-  database: "diving_into_ecto",
+  database: "fishing_spot",
   username: "postgres",
   password: "postgres"

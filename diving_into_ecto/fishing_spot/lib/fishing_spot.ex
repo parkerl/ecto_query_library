@@ -1,4 +1,4 @@
-defmodule DivingIntoEcto do
+defmodule FishingSpot do
   use Application
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
@@ -8,12 +8,12 @@ defmodule DivingIntoEcto do
 
     children = [
       # Define workers and child supervisors to be supervised
-      # worker(DivingIntoEcto.Worker, [arg1, arg2, arg3])
+      # worker(FishingSpot.Worker, [arg1, arg2, arg3])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: DivingIntoEcto.Supervisor]
+    opts = [strategy: :one_for_one, name: FishingSpot.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

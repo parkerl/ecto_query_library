@@ -1,8 +1,8 @@
-defmodule DivingIntoEcto.Mixfile do
+defmodule FishingSpot.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :diving_into_ecto,
+    [app: :fishing_spot,
      version: "0.0.1",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
@@ -14,8 +14,8 @@ defmodule DivingIntoEcto.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger],
-     mod: {DivingIntoEcto, [:postgrex, :ecto]}]
+    [applications: [],
+     mod: {FishingSpot, [:postgrex, :ecto]}]
   end
 
   # Dependencies can be Hex packages:
@@ -28,7 +28,10 @@ defmodule DivingIntoEcto.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:postgrex, ">= 0.0.0"},
-     {:ecto, "~> 0.9.0"}]
+    [
+      {:poolboy, "~> 1.4.0"},
+      {:postgrex, ">= 0.8.0"},
+      {:ecto, "~> 0.11.0"}
+    ]
   end
 end

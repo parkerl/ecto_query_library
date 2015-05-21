@@ -1,4 +1,4 @@
-defmodule DivingIntoEctoTest do
+defmodule FishingSpotTest do
   use ExUnit.Case
 
   test "the truth" do
