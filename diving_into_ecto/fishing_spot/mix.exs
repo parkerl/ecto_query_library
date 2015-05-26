@@ -14,8 +14,8 @@ defmodule FishingSpot.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [],
-     mod: {FishingSpot, [:postgrex, :ecto]}]
+    [applications: [:logger, :postgrex, :ecto],
+     mod: {FishingSpot, []}]
   end
 
   # Dependencies can be Hex packages:
@@ -29,7 +29,6 @@ defmodule FishingSpot.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:poolboy, "~> 1.4.0"},
       {:postgrex, ">= 0.8.0"},
       {:ecto, "~> 0.11.0"}
     ]
