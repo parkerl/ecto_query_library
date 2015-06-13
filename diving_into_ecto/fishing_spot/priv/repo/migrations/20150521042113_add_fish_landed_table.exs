@@ -6,9 +6,9 @@ defmodule FishingSpot.Repo.Migrations.AddFishLandedTable do
       add :date_and_time,    :datetime
       add :weight,           :decimal
       add :length,           :decimal
-      references(:people)
-      references(:locations)
-      references(:fly_types)
+      add :person_id, references(:people)
+      add :location_id, references(:locations)
+      add :fly_type_id, references(:fly_types)
 
       timestamps
     end

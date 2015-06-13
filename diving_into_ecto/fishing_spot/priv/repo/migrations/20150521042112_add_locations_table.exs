@@ -7,7 +7,7 @@ defmodule FishingSpot.Repo.Migrations.AddLocationsTable do
       add :altitude,  :integer
       add :lat,       :decimal
       add :long,      :decimal
-      references(:location_types)
+      add :location_type_id, references(:location_types)
 
       timestamps
     end
