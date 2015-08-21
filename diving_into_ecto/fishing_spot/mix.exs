@@ -29,8 +29,8 @@ defmodule FishingSpot.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:postgrex, ">= 0.8.0"},
-      {:ecto, "~> 0.11.0"}
+      {:postgrex, ">= 0.9.1"},
+      {:ecto, "~> 0.16.0"}
     ]
   end
 end
