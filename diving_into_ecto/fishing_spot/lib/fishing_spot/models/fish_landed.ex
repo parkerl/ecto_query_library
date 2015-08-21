@@ -1,4 +1,8 @@
 defmodule FishingSpot.FishLanded do
+  alias FishingSpot.Person
+  alias FishingSpot.FishLanded
+  alias FishingSpot.FishSpecies
+  alias FishingSpot.FlyType
   use Ecto.Model
 
   schema "fish_landed" do
