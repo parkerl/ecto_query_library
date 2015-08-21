@@ -7,8 +7,9 @@ defmodule FishingSpot.FishLanded do
     field :weight,           :decimal
     field :length,           :decimal
 
-    belongs_to :person,      Person
-    belongs_to :location,    Location
-    belongs_to :fly_type,    FlyType
+    belongs_to :person,        Person
+    belongs_to :location,      Location
+    belongs_to :fly_type,      FlyType
+    belongs_to :fish_species,  FishSpecies
   end
 end

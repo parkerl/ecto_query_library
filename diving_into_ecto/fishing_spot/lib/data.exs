@@ -24,8 +24,8 @@ defmodule FishingSpot.Data do
     IO.puts "Generating data"
 
     rainbow_trout   = Repo.insert %FishSpecies{  name: "Rainbow Trout"   }
-    brown_trout     = Repo.insert %FishSpecies{  name: "brown Trout"     }
-    lake_trout      = Repo.insert %FishSpecies{  name: "lake Trout"      }
+    brown_trout     = Repo.insert %FishSpecies{  name: "Brown Trout"     }
+    lake_trout      = Repo.insert %FishSpecies{  name: "Lake Trout"      }
     brook_trout     = Repo.insert %FishSpecies{  name: "Brook Trout"     }
     cutthroat_trout = Repo.insert %FishSpecies{  name: "Cutthroat Trout" }
 
@@ -89,6 +89,7 @@ defmodule FishingSpot.Data do
       [location|_]              = Enum.shuffle(locations)
       [fly     |_]              = Enum.shuffle(flies)
       [trip    |_]              = Enum.shuffle(trips)
+      [fish    |_]              = Enum.shuffle(fish)
       length                    = Decimal.new(:random.uniform(30))
       weight                    = Decimal.new(:random.uniform(5))
       {year, month, trip_start} = trip.start_date
@@ -99,7 +100,7 @@ defmodule FishingSpot.Data do
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(Ecto.Date.from_erl(date_caught), Ecto.Time.local())
       {:ok, date_and_time}      = Ecto.DateTime.dump(date_and_time_caught)
 
-      Repo.insert %FishLanded{date_and_time: date_and_time, weight: weight, length: length, person_id: person.id, location_id: location.id, fly_type_id: fly.id}
+      Repo.insert %FishLanded{date_and_time: date_and_time, weight: weight, length: length, person_id: person.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
     end)
   end
 end
