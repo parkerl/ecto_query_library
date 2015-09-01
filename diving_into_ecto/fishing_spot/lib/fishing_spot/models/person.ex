@@ -10,5 +10,6 @@ defmodule FishingSpot.Person do
 
     has_many :people_trips, PersonTrip
     has_many :trips, through: [:people_trips, :trip]
+    has_many :fish_landed, FishLanded
   end
 end

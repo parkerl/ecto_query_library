@@ -1,19 +1,11 @@
 defmodule FishingSpot.Queries do
   alias FishingSpot.Repo
-  alias FishingSpot.Location
-  alias FishingSpot.LocationTrip
-  alias FishingSpot.LocationType
-  alias FishingSpot.Person
-  alias FishingSpot.PersonTrip
   alias FishingSpot.FishLanded
-  alias FishingSpot.FishSpecies
-  alias FishingSpot.FlyType
-  alias FishingSpot.Trip
 
   import Ecto.Query
 
   def biggest_fish do
-    Repo.all(from p in FishLanded, select: max(p.length))
+    Repo.all(from fish in FishLanded, select: max(fish.length))
   end
 
   def biggest_fish_per_person do
@@ -31,11 +23,25 @@ defmodule FishingSpot.Queries do
     select: [f.length, p.name] )
   end
 
+  def biggest_fish_catcher_in_clause do
+    Repo.all(from f in FishLanded,
+    join: p in assoc(f, :person),
+    where: fragment("? IN (SELECT MAX(fish.length) FROM fish_landed fish)", f.length),
+    select: [f.length, p.name] )
+  end
+
   def biggest_fish_per_person_per_trip do
     Repo.all(from f in FishLanded,
     join: p in assoc(f, :person),
     join: t in assoc(p, :trips),
     group_by: [p.name, t.start_date],
     select: [max(f.length), p.name, t.start_date])
+  end
+
+  def in_fish do
+    Repo.all(from f in FishLanded,
+             where: not(f.id in(^[1])),
+             limit: 1
+             )
   end
 end
