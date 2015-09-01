@@ -2,7 +2,7 @@ defmodule FishingSpot.Repo.Migrations.AddPeopleTable do
   use Ecto.Migration
 
   def change do
-    create table(:people) do
+    create table(:fishermen) do
       add :name,          :string
       add :date_of_birth, :date
 

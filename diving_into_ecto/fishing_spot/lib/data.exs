@@ -3,8 +3,8 @@ defmodule FishingSpot.Data do
   alias FishingSpot.Location
   alias FishingSpot.LocationTrip
   alias FishingSpot.LocationType
-  alias FishingSpot.Person
-  alias FishingSpot.PersonTrip
+  alias FishingSpot.Fisherman
+  alias FishingSpot.FishermanTrip
   alias FishingSpot.FishLanded
   alias FishingSpot.FishSpecies
   alias FishingSpot.FlyType
@@ -43,12 +43,12 @@ defmodule FishingSpot.Data do
     river        = Repo.insert! %LocationType{  name: "River"        }
     tail_water   = Repo.insert! %LocationType{  name: "Tail Water"   }
 
-    mark = Repo.insert! %Person{ name: "Mark",  date_of_birth: %Ecto.Date{ year: 1970,  month: 1,   day:  2 }}
-    kirk = Repo.insert! %Person{ name: "Kirk",  date_of_birth: %Ecto.Date{ year: 1978,  month: 3,   day:  5 }}
-    joe  = Repo.insert! %Person{ name: "Joe",   date_of_birth: %Ecto.Date{ year: 1973,  month: 10,  day: 15 }}
-    lew  = Repo.insert! %Person{ name: "Lew",   date_of_birth: %Ecto.Date{ year: 1976,  month: 1,   day:  5 }}
+    mark = Repo.insert! %Fisherman{ name: "Mark",  date_of_birth: %Ecto.Date{ year: 1970,  month: 1,   day:  2 }}
+    kirk = Repo.insert! %Fisherman{ name: "Kirk",  date_of_birth: %Ecto.Date{ year: 1978,  month: 3,   day:  5 }}
+    joe  = Repo.insert! %Fisherman{ name: "Joe",   date_of_birth: %Ecto.Date{ year: 1973,  month: 10,  day: 15 }}
+    lew  = Repo.insert! %Fisherman{ name: "Lew",   date_of_birth: %Ecto.Date{ year: 1976,  month: 1,   day:  5 }}
 
-    people = [mark, kirk, joe, lew]
+    fishermen = [mark, kirk, joe, lew]
 
     trip1 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2012,   month: 6,    day: 5  },   end_date: %Ecto.Date{  year: 2012,   month: 6,    day: 12 } }
     trip2 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2012,   month: 10,   day: 15 },  end_date: %Ecto.Date{   year: 2012,   month: 10,   day: 20 } }
@@ -79,24 +79,24 @@ defmodule FishingSpot.Data do
     Repo.insert! %LocationTrip{location_id: white_river.id,  trip_id: trip4.id}
     Repo.insert! %LocationTrip{location_id: lake_fork.id,    trip_id: trip5.id}
 
-    Repo.insert! %PersonTrip{person_id: lew.id  , trip_id: trip1.id}
-    Repo.insert! %PersonTrip{person_id: lew.id  , trip_id: trip2.id}
-    Repo.insert! %PersonTrip{person_id: lew.id  , trip_id: trip3.id}
-    Repo.insert! %PersonTrip{person_id: lew.id  , trip_id: trip4.id}
-    Repo.insert! %PersonTrip{person_id: lew.id  , trip_id: trip5.id}
-    Repo.insert! %PersonTrip{person_id: kirk.id , trip_id: trip4.id}
-    Repo.insert! %PersonTrip{person_id: kirk.id , trip_id: trip5.id}
-    Repo.insert! %PersonTrip{person_id: joe.id  , trip_id: trip1.id}
-    Repo.insert! %PersonTrip{person_id: joe.id  , trip_id: trip5.id}
-    Repo.insert! %PersonTrip{person_id: mark.id , trip_id: trip1.id}
-    Repo.insert! %PersonTrip{person_id: mark.id , trip_id: trip2.id}
-    Repo.insert! %PersonTrip{person_id: mark.id , trip_id: trip3.id}
+    Repo.insert! %FishermanTrip{fisherman_id: lew.id  , trip_id: trip1.id}
+    Repo.insert! %FishermanTrip{fisherman_id: lew.id  , trip_id: trip2.id}
+    Repo.insert! %FishermanTrip{fisherman_id: lew.id  , trip_id: trip3.id}
+    Repo.insert! %FishermanTrip{fisherman_id: lew.id  , trip_id: trip4.id}
+    Repo.insert! %FishermanTrip{fisherman_id: lew.id  , trip_id: trip5.id}
+    Repo.insert! %FishermanTrip{fisherman_id: kirk.id , trip_id: trip4.id}
+    Repo.insert! %FishermanTrip{fisherman_id: kirk.id , trip_id: trip5.id}
+    Repo.insert! %FishermanTrip{fisherman_id: joe.id  , trip_id: trip1.id}
+    Repo.insert! %FishermanTrip{fisherman_id: joe.id  , trip_id: trip5.id}
+    Repo.insert! %FishermanTrip{fisherman_id: mark.id , trip_id: trip1.id}
+    Repo.insert! %FishermanTrip{fisherman_id: mark.id , trip_id: trip2.id}
+    Repo.insert! %FishermanTrip{fisherman_id: mark.id , trip_id: trip3.id}
 
     :random.seed(:erlang.now)
 
     Enum.each(1..1000, fn(_) ->
       attributes = get_fish_attributes(30, 5)
-      Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: attributes.weight, length: attributes.length, person_id: attributes.person.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+      Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: attributes.weight, length: attributes.length, fisherman_id: attributes.fisherman.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     end)
 
 
@@ -111,7 +111,7 @@ defmodule FishingSpot.Data do
       date_caught               = {year, month, trip_start + day_caught}
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(Ecto.Date.from_erl(date_caught), Ecto.Time.local())
       {:ok, date_and_time}      = Ecto.DateTime.dump(date_and_time_caught)
-      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), person_id: mark.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
+      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: mark.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
       [location|_]              = Enum.shuffle(locations)
       [fly     |_]              = Enum.shuffle(flies)
       [trip    |_]              = Enum.shuffle(trips)
@@ -123,7 +123,7 @@ defmodule FishingSpot.Data do
       date_caught               = {year, month, trip_start + day_caught}
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(Ecto.Date.from_erl(date_caught), Ecto.Time.local())
       {:ok, date_and_time}      = Ecto.DateTime.dump(date_and_time_caught)
-      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), person_id: kirk.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
+      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: kirk.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
       [location|_]              = Enum.shuffle(locations)
       [fly     |_]              = Enum.shuffle(flies)
       [trip    |_]              = Enum.shuffle(trips)
@@ -135,7 +135,7 @@ defmodule FishingSpot.Data do
       date_caught               = {year, month, trip_start + day_caught}
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(Ecto.Date.from_erl(date_caught), Ecto.Time.local())
       {:ok, date_and_time}      = Ecto.DateTime.dump(date_and_time_caught)
-      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), person_id: lew.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
+      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: lew.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
       [location|_]              = Enum.shuffle(locations)
       [fly     |_]              = Enum.shuffle(flies)
       [trip    |_]              = Enum.shuffle(trips)
@@ -147,13 +147,13 @@ defmodule FishingSpot.Data do
       date_caught               = {year, month, trip_start + day_caught}
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(Ecto.Date.from_erl(date_caught), Ecto.Time.local())
       {:ok, date_and_time}      = Ecto.DateTime.dump(date_and_time_caught)
-      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), person_id: joe.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
+      Repo.insert %FishLanded{date_and_time: date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: location.id, fly_type_id: fly.id, fish_species_id: fish.id}
   end
 
-    defstruct name: "RandomizedAttributes", person: nil, location: nil, fly: nil, trip: nil, fish: nil, length: nil, weight: nil, date_and_time_caught: nil
+    defstruct name: "RandomizedAttributes", fisherman: nil, location: nil, fly: nil, trip: nil, fish: nil, length: nil, weight: nil, date_and_time_caught: nil
 
     def get_fish_attributes(max_length, max_weight) do
-      person              = Enum.shuffle(people) |> List.first
+      fisherman              = Enum.shuffle(fishermen) |> List.first
       location            = Enum.shuffle(locations) |> List.first
       fly                 = Enum.shuffle(flies) |> List.first
       trip                = Enum.shuffle(trips) |> List.first
@@ -169,7 +169,7 @@ defmodule FishingSpot.Data do
       date_caught               = %Ecto.Date{year: year, month: month, day: trip_start + day_caught}
       date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.local())
       %RandomizedAttributes{
-        person:    person,
+        fisherman:    fisherman,
         location:  location,
         fly:       fly,
         trip:      trip,

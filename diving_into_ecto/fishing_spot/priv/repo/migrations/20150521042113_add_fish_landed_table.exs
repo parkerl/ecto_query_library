@@ -7,7 +7,7 @@ defmodule FishingSpot.Repo.Migrations.AddFishLandedTable do
       add :weight,           :decimal
       add :length,           :decimal
 
-      add :person_id, references(:people)
+      add :fisherman_id, references(:fishermen)
       add :location_id, references(:locations)
       add :fly_type_id, references(:fly_types)
       add :fish_species_id, references(:fish_species)

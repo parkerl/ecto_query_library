@@ -1,5 +1,5 @@
 defmodule FishingSpot.FishLanded do
-  alias FishingSpot.Person
+  alias FishingSpot.Fisherman
   alias FishingSpot.FishLanded
   alias FishingSpot.FishSpecies
   alias FishingSpot.FlyType
@@ -11,7 +11,7 @@ defmodule FishingSpot.FishLanded do
     field :weight,           :decimal
     field :length,           :decimal
 
-    belongs_to :person,        Person
+    belongs_to :fisherman,        Fisherman
     belongs_to :location,      Location
     belongs_to :fly_type,      FlyType
     belongs_to :fish_species,  FishSpecies
