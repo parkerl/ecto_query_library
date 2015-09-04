@@ -14,5 +14,7 @@ defmodule FishingSpot.Repo.Migrations.AddFishLandedTable do
 
       timestamps
     end
+
+    create index(:fish_landed, [:fisherman_id])
   end
 end

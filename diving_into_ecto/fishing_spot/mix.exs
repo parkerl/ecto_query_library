@@ -30,7 +30,7 @@ defmodule FishingSpot.Mixfile do
   defp deps do
     [
       {:postgrex, ">= 0.9.1"},
-      {:ecto, "~> 0.16.0"}
+      {:ecto, "~> 1.0.1"}
     ]
   end
 end
