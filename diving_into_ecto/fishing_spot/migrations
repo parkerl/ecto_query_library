@@ -1,8 +1,8 @@
 add_fly_types_table
 add_fish_species_table
 add_trips_table
-add_locations_table
 add_location_types_table
+add_locations_table
 add_fishermen_table
 add_fish_landed_table
 add_locations_trips_table
