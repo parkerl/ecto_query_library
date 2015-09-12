@@ -1,5 +1,6 @@
 defmodule FishingSpot.Fisherman do
   alias FishingSpot.FishermanTrip
+  alias FishingSpot.FishLanded
 
   use Ecto.Model
 
