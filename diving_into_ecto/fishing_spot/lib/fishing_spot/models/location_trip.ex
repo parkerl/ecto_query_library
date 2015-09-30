@@ -1,5 +1,7 @@
 defmodule FishingSpot.LocationTrip do
   use Ecto.Model
+  alias FishingSpot.Location
+  alias FishingSpot.Trip
 
   schema "locations_trips" do
     timestamps

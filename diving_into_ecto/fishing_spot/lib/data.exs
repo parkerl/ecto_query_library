@@ -98,7 +98,6 @@ defmodule FishingSpot.Data do
     Repo.insert! %FishermanTrip{fisherman_id: mark.id , trip_id: trip2.id}
     Repo.insert! %FishermanTrip{fisherman_id: mark.id , trip_id: trip3.id}
 
-    :random.seed(:erlang.now)
 
     Enum.each(1..1000, fn(_) ->
       attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
@@ -116,10 +115,12 @@ defmodule FishingSpot.Data do
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
+    :random.seed(:erlang.now)
     fisherman           = Enum.shuffle(fishermen) |> List.first
+    fisherman           = Repo.preload(fisherman, :trips)
     location            = Enum.shuffle(locations) |> List.first
     fly                 = Enum.shuffle(flies) |> List.first
-    trip                = Enum.shuffle(trips) |> List.first
+    trip                = Enum.shuffle(fisherman.trips) |> List.first
     fish                = Enum.shuffle(fish_types) |> List.first
     length              = Decimal.new(:random.uniform(max_length))
     weight              = Decimal.new(:random.uniform(max_weight))
