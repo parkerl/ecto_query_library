@@ -101,4 +101,16 @@ defmodule FishingSpot.Queries do
         location_type: location_types.name
       })
   end
+
+  def fish_per_day do
+    Repo.all(
+      from fish in FishLanded,
+      group_by: fragment("date"),
+      order_by: fragment("2"),
+      select: %{
+        date: fragment("date_trunc('day', ?) AS date", field(fish, :date_and_time)),
+        fish_count: count(fish.id)
+      }
+    )
+  end
 end
