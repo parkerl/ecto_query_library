@@ -1,13 +1,60 @@
 defmodule FishingSpot.Queries do
   alias FishingSpot.Repo
   alias FishingSpot.FishLanded
+  alias FishingSpot.Fisherman
 
   import Ecto.Query
+
+  def all_fishermen do
+    Repo.all(
+      from fisherman in Fisherman
+    ) |> IO.inspect
+
+    Repo.all(
+      from fisherman in Fisherman,
+      select: fisherman
+    ) |> IO.inspect
+
+    Repo.all(
+      from fisherman in Fisherman,
+      select: [fisherman.name, fisherman.date_of_birth]
+    ) |> IO.inspect
+
+    Repo.all(
+      from fisherman in Fisherman,
+      select: { fisherman.name, fisherman.date_of_birth }
+    ) |> IO.inspect
+
+    Repo.all(
+      from fisherman in Fisherman,
+      select: %{ fisherman_name: fisherman.name, fisherman_dob: fisherman.date_of_birth }
+    ) |> IO.inspect
+  end
 
   def biggest_fish do
     Repo.one(
       from fish in FishLanded,
       select: max(fish.length)
+    ) |> IO.inspect
+
+    Repo.one(
+      from fish in FishLanded,
+      select: {max(fish.length)}
+    ) |> IO.inspect
+
+    Repo.one(
+      from fish in FishLanded,
+      select: [max(fish.length)]
+    ) |> IO.inspect
+
+    Repo.one(
+      from fish in FishLanded,
+      select: %{big_fish: max(fish.length)}
+    )
+
+     Repo.one(
+      from fish in {"(select f.* from fish_landed where fish_landed.length > 20)", FishLanded},
+      select: %{big_fish: max(fish.length)}
     )
   end
 
