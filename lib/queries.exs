@@ -31,6 +31,20 @@ defmodule FishingSpot.Queries do
     ) |> IO.inspect
   end
 
+  def ordered_fishermen do
+    Repo.all(
+      from fisherman in Fisherman,
+      order_by: fisherman.name,
+      select: fisherman.name
+    ) |> IO.inspect
+
+    Repo.all(
+      from fisherman in Fisherman,
+      order_by: [desc: fisherman.name],
+      select: fisherman.name
+    )
+  end
+
   def biggest_fish do
     Repo.one(
       from fish in FishLanded,
