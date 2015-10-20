@@ -231,6 +231,26 @@ select: %{
 }
 ```
 
+# Complex Select Logic Using a Fragment
+
+_Demonstrates how to use multiple columns to calculate a value.
+Also orders descending using positional column selectin._
+
+```elixir
+from fish in FishLanded,
+join: fisherman in assoc(fish, :fisherman),
+order_by: [desc: fragment("1")],
+select: %{
+  bool: fragment(
+    "((? = 'Kirk' OR ? = 'Mark') AND NOT ? < 10) AS crazy_select",
+    field(fisherman, :name),
+    field(fisherman, :name),
+    field(fish, :length)),
+  fisherman: fisherman.name
+}
+```
+
+
 # Partial-preloading
 
 _Demonstrates how to select only parts of a join model in a preload. 
