@@ -234,7 +234,7 @@ select: %{
 # Complex Select Logic Using a Fragment
 
 _Demonstrates how to use multiple columns to calculate a value.
-Also orders descending using positional column selectin._
+Also orders descending using positional column selection._
 
 ```elixir
 from fish in FishLanded,
