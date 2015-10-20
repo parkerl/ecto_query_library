@@ -100,7 +100,29 @@ defmodule FishingSpot.Queries do
     Repo.all(
       from fish in FishLanded,
       join: fisherman in assoc(fish, :fisherman),
-      group_by: "fisherman",
+      group_by: fisherman.name,
+      order_by: fisherman.name,
+      select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
+    )
+  end
+
+  def biggest_fish_per_fisherman_in_clause do
+    Repo.all(
+      from fish in FishLanded,
+      join: fisherman in assoc(fish, :fisherman),
+      where: fisherman.name in ["Mark", "Kirk"],
+      group_by: fisherman.name,
+      order_by: fisherman.name,
+      select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
+    )
+  end
+
+  def biggest_fish_per_fisherman_not_in_clause do
+    Repo.all(
+      from fish in FishLanded,
+      join: fisherman in assoc(fish, :fisherman),
+      where: not fisherman.name in ["Mark", "Kirk"],
+      group_by: fisherman.name,
       order_by: fisherman.name,
       select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
     )
@@ -161,6 +183,22 @@ defmodule FishingSpot.Queries do
         location: locations.name,
         location_type: location_types.name
       })
+  end
+
+  def complex_select_fragment do
+    Repo.all(
+      from fish in FishLanded,
+      join: fisherman in assoc(fish, :fisherman),
+      order_by: [desc: fragment("1")],
+      select: %{
+        bool: fragment(
+          "((? = 'Kirk' OR ? = 'Mark') AND NOT ? < 10) AS crazy_select",
+          field(fisherman, :name),
+          field(fisherman, :name),
+          field(fish, :length)),
+        fisherman: fisherman.name
+      }
+    )
   end
 
   def fish_per_day do
