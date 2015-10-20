@@ -161,6 +161,29 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
+# Where with In Clause
+
+```elixir
+from fish in FishLanded,
+join: fisherman in assoc(fish, :fisherman),
+where: fisherman.name in ["Mark", "Kirk"],
+group_by: fisherman.name,
+order_by: fisherman.name,
+select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
+```
+
+# Where with Not In Clause
+_Demonstrates the use of `not` to negate an in clause._
+
+```elixir
+from fish in FishLanded,
+join: fisherman in assoc(fish, :fisherman),
+where: not fisherman.name in ["Mark", "Kirk"],
+group_by: fisherman.name,
+order_by: fisherman.name,
+select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
+```
+
 # Complex Muti-join Multi-where
 
 _Demonstrates joins, sub-querying and using map syntax in the select. 
@@ -269,5 +292,3 @@ FishLanded
       |> join(:inner, [x, y, z, a, b, c], location_types in assoc(c, :location_type))
       |> select([whatever], count(whatever.id))
 ```
-
-        
