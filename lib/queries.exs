@@ -174,4 +174,86 @@ defmodule FishingSpot.Queries do
       }
     )
   end
+
+  def composed_biggest_fish_details do
+    query = FishLanded
+      |> join(:inner, [fish], fly_type in assoc(fish, :fly_type))
+      |> join(:inner, [fish, fly_type], fish_species in assoc(fish, :fish_species))
+      |> join(:inner, [fish, fly_type, fish_type], fisherman in assoc(fish, :fisherman))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman], trip in assoc(fisherman, :trips))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman, trip],
+              locations in assoc(trip, :locations))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman, trip, location],
+              location_types in assoc(location, :location_type))
+      |> select([fish], count(fish.id))
+
+    IO.inspect query
+    Repo.all(query)
+
+    query = FishLanded
+      |> join(:inner, [fish], fly_type in assoc(fish, :fly_type))
+      |> join(:inner, [fish], fish_species in assoc(fish, :fish_species))
+      |> join(:inner, [fish], fisherman in assoc(fish, :fisherman))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman],
+              trip in assoc(fisherman, :trips))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman, trip],
+              locations in assoc(trip, :locations))
+      |> join(:inner, [fish, fly_type, fish_type, fisherman, trip, location],
+              location_types in assoc(location, :location_type))
+      |> select([fish], count(fish.id))
+
+    IO.inspect query
+    Repo.all(query)
+
+    query = FishLanded
+      |> join(:inner, [fish], fly_type in assoc(fish, :fly_type))
+      |> join(:inner, [nemo], fish_species in assoc(nemo, :fish_species))
+      |> join(:inner, [bait], fisherman in assoc(bait, :fisherman))
+      |> join(:inner, [foo, bar, baz, ahab], trip in assoc(ahab, :trips))
+      |> join(:inner, [foo, bar, baz, ahab, set_sail], locations in assoc(set_sail, :locations))
+      |> join(:inner, [x, y, z, a, b, c], location_types in assoc(c, :location_type))
+      |> select([whatever], count(whatever.id))
+
+    IO.inspect query
+    Repo.all(query)
+
+    query = FishLanded
+    |> join(:inner, [fish, foo, bar, baz], fisherman in assoc(fish, :fisherman))
+    |> join(:inner, [fish, fisherman],
+            trip in assoc(fisherman, :trips))
+    |> join(:inner, [fish, trip],
+            locations in assoc(trip, :locations))
+    |> select([fish], count(fish.id))
+
+    IO.inspect query
+    Repo.all(query)
+
+    query = FishLanded
+    |> join(:inner, [fish], fisherman in assoc(fish, :fisherman))
+    |> join(:inner, [fish, fisherman],
+            trip in assoc(fisherman, :trips))
+    |> select([fish], count(fish.id))
+
+    IO.inspect query
+    Repo.all(query)
+  end
+
+  def select_associated do
+    query = Fisherman
+    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+    |> where([fisherman], fisherman.id == 1)
+    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+    |> preload([fisherman, fish], [fish_landed: fish])
+
+    Repo.one(query).fisherman.fish_landed |> IO.inspect
+
+    query = Fisherman
+    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+    |> where([fisherman], fisherman.id == 1)
+    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+    |> preload([fisherman, fish], [fish_landed: fish])
+
+    fisherman = Repo.one(query) |> List.first
+    fisherman.fish_landed |> IO.inspect
+  end
 end
