@@ -207,3 +207,27 @@ select: %{
   fish_count: count(fish.id)
 }
 ```
+
+# Partial-preloading
+
+_Demonstrates how to select only parts of a join model in a preload. 
+Uses both map and list select syntax._
+
+```elixir
+    query = Fisherman
+    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+    |> where([fisherman], fisherman.id == 1)
+    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+    |> preload([fisherman, fish], [fish_landed: fish])
+
+    Repo.one(query).fisherman.fish_landed |> IO.inspect
+
+    query = Fisherman
+    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+    |> where([fisherman], fisherman.id == 1)
+    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+    |> preload([fisherman, fish], [fish_landed: fish])
+
+    fisherman = Repo.one(query) |> List.first
+    fisherman.fish_landed |> IO.inspect
+```
