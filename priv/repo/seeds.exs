@@ -9,6 +9,7 @@ defmodule FishingSpot.Data do
   alias FishingSpot.FishSpecies
   alias FishingSpot.FlyType
   alias FishingSpot.Trip
+  alias FishingSpot.Account
 
   defmodule RandomizedAttributes do
     defstruct fisherman: nil, location: nil, fly: nil, trip: nil, fish: nil, length: nil, weight: nil, date_and_time_caught: nil
@@ -112,26 +113,32 @@ defmodule FishingSpot.Data do
     Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: lew.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
     Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+
+
+    Repo.insert %Account{identifier: "lew@example.com",  name: "Lew" }
+    Repo.insert %Account{identifier: "mark@example.com", name: "Mark"}
+    Repo.insert %Account{identifier: "john@example.com", name: "John"}
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
     :random.seed(:erlang.now)
-    fisherman           = Enum.shuffle(fishermen) |> List.first
-    fisherman           = Repo.preload(fisherman, :trips)
-    location            = Enum.shuffle(locations) |> List.first
-    fly                 = Enum.shuffle(flies) |> List.first
-    trip                = Enum.shuffle(fisherman.trips) |> List.first
-    fish                = Enum.shuffle(fish_types) |> List.first
-    length              = Decimal.new(:random.uniform(max_length))
-    weight              = Decimal.new(:random.uniform(max_weight))
+    fisherman           = Enum.shuffle(fishermen                 ) |> List.first
+    fisherman           = Repo.preload(fisherman, :trips         )
+    location            = Enum.shuffle(locations                 ) |> List.first
+    fly                 = Enum.shuffle(flies                     ) |> List.first
+    trip                = Enum.shuffle(fisherman.trips           ) |> List.first
+    fish                = Enum.shuffle(fish_types                ) |> List.first
+    length              = Decimal.new(:random.uniform(max_length ) )
+    weight              = Decimal.new(:random.uniform(max_weight ) )
 
     %Ecto.Date{year: year, month: month, day: trip_start} = trip.start_date
-    %Ecto.Date{day: trip_end} = trip.end_date
+    %Ecto.Date{day: trip_end}                             = trip.end_date
 
     trip_length               = trip_end - trip_start
     day_caught                = :random.uniform(trip_length)
     date_caught               = %Ecto.Date{year: year, month: month, day: trip_start + day_caught}
     date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.local())
+
     %RandomizedAttributes{
       fisherman:    fisherman,
       location:  location,
