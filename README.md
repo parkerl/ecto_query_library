@@ -4,6 +4,13 @@ The repo with this post reproduced in the README can be found at [https://github
 
 For the full story behind this project and the queries start here [Diving into Ecto: Part 1](http://www.glydergun.com/diving-into-ecto/).
 
+# Versions
+_The query library is currently built using the following setup. Some features are only avaiable on Ecto master. I will strive to indicate which queries will only run on master._
+
+ - Elixir 1.1.1
+ - Ecto master
+ - Postgres 9.4
+
 # Simple Queries with Different Select Styles
 _Demonstrates how the various select styles change the return structure._
 
