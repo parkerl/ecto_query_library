@@ -16,9 +16,6 @@ defmodule FishingSpot.Data do
   end
 
   def generate do
-    Mix.Task.run "ecto.drop",     ["FishingSpot.Repo"]
-    Mix.Task.run "ecto.create",   ["FishingSpot.Repo"]
-    Mix.Task.run "ecto.migrate",  ["FishingSpot.Repo"]
     Logger.disable(self())
     _generate
     Logger.enable(self())
@@ -115,13 +112,13 @@ defmodule FishingSpot.Data do
     Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
 
 
-    Repo.insert %Account{identifier: "lew@example.com",  name: "Lew" }
-    Repo.insert %Account{identifier: "mark@example.com", name: "Mark"}
-    Repo.insert %Account{identifier: "john@example.com", name: "John"}
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
-    :random.seed(:erlang.now)
+    :random.seed(:erlang.system_time)
     fisherman           = Enum.shuffle(fishermen                 ) |> List.first
     fisherman           = Repo.preload(fisherman, :trips         )
     location            = Enum.shuffle(locations                 ) |> List.first

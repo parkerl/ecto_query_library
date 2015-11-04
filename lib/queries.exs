@@ -2,6 +2,7 @@ defmodule FishingSpot.Queries do
   alias FishingSpot.Repo
   alias FishingSpot.FishLanded
   alias FishingSpot.Fisherman
+  alias FishingSpot.Account
 
   import Ecto.Query
 
@@ -293,5 +294,10 @@ defmodule FishingSpot.Queries do
 
     fisherman = Repo.one(query) |> List.first
     fisherman.fish_landed |> IO.inspect
+  end
+
+  def prefixed do
+    query = from accounts in Account
+    Repo.all(%{query | prefix: "users"})
   end
 end

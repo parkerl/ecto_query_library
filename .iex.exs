@@ -9,6 +9,7 @@ alias FishingSpot.FishSpecies
 alias FishingSpot.FlyType
 alias FishingSpot.Trip
 alias FishingSpot.Queries
+alias FishingSpot.Account
 
 import Ecto.Query
 
