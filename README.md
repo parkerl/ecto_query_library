@@ -312,3 +312,29 @@ FishLanded
       |> join(:inner, [x, y, z, a, b, c], location_types in assoc(c, :location_type))
       |> select([whatever], count(whatever.id))
 ```
+
+# Working With Prefixes
+_Demostrates how to work with schemas other than "public" in Postgres._
+
+```elixir
+# The migration
+  def change do
+    execute "CREATE SCHEMA users"
+
+    create table(:accounts, prefix: :users) do
+      add :identifier, :string
+      add :name,       :string
+
+      timestamps
+    end
+  end
+  
+# Inserting data
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
+    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+
+#Querying
+    query = from accounts in Account
+    Repo.all(%{query | prefix: "users"})
+```
