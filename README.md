@@ -313,7 +313,7 @@ FishLanded
       |> select([whatever], count(whatever.id))
 ```
 
-# Working With Prefixes
+# Working with Prefixes
 _Demostrates how to work with schemas other than "public" in Postgres._
 
 ```elixir
