@@ -7,7 +7,9 @@ defmodule FishingSpot.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     aliases: aliases,
+    ]
   end
 
   # Configuration for the OTP application
@@ -30,7 +32,11 @@ defmodule FishingSpot.Mixfile do
   defp deps do
     [
       {:postgrex, ">= 0.9.1"},
-      {:ecto, "~> 1.0.1"}
+      {:ecto, git: "https://github.com/elixir-lang/ecto.git"}
     ]
+  end
+
+  defp aliases do
+    ["ecto.rebuild": ["ecto.drop", "ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"]]
   end
 end
