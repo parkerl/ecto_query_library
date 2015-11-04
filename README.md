@@ -169,7 +169,7 @@ select: [fish.length, fisherman.name]
 ```
 
 # Keyword Where
-_Demonstrates the user of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
+_Demonstrates the use of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
 
 ```elixir
     {_, date} = Ecto.Date.cast("1976-01-05")
