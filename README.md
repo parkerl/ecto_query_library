@@ -168,6 +168,49 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
+# Keyword Where
+_Demonstrates the user of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
+
+```elixir
+    {_, date} = Ecto.Date.cast("1976-01-05")
+
+    Repo.all(
+      from fisherman in Fisherman,
+      where: [name: "Lew", date_of_birth: ^date]
+    )
+    
+    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
+    FROM "fishermen" AS f0 
+    WHERE ((f0."name" = 'Lew') 
+      AND (f0."date_of_birth" = $1)) 
+      [{1976, 1, 5}]
+
+    where(Fisherman, [name: "Lew", date_of_birth: ^date]) |> Repo.all
+    
+    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
+    FROM "fishermen" AS f0 
+    WHERE ((f0."name" = 'Lew') 
+      AND (f0."date_of_birth" = $1)) 
+      [{1976, 1, 5}] 
+```
+
+# Keyword Where Referencing Another Model
+_Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
+
+```
+    join(Fisherman, :inner, [], fish_landed in FishLanded)
+      |> where([fisherman, fish_landed], [name: "Lew", date_of_birth: ^date, id: fish_landed.fisherman_id])
+      |> Repo.all
+      
+      => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
+      FROM "fishermen" AS f0 
+      INNER JOIN "fish_landed" AS f1 ON TRUE 
+      WHERE (((f0."name" = 'Lew') 
+        AND (f0."date_of_birth" = $1)) 
+        AND (f0."id" = f1."fisherman_id")) 
+        [{1976, 1, 5}] 
+```
+
 # Where with In Clause
 
 ```elixir
