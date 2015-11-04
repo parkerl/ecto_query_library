@@ -194,7 +194,7 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       [{1976, 1, 5}] 
 ```
 
-# Keyword Where Referencing Another Model<span style="background-color: 'green';color: green;font-size: 15px;padding-left: 5px;vertical-align: top;">master</span>
+# Keyword Where Referencing Another Model
 
 _Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
 
