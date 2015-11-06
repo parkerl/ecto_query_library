@@ -100,7 +100,7 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
-# Count Distinct<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg">
+# Count Distinct<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
 
 ```elixir
 from fish in FishLanded,
@@ -175,7 +175,7 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
-# Keyword Where<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg">
+# Keyword Where<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
 _Demonstrates the use of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
 
 ```elixir
@@ -201,7 +201,7 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       [{1976, 1, 5}] 
 ```
 
-# Keyword Where Referencing Another Model<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg">
+# Keyword Where Referencing Another Model<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
 
 _Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
 
@@ -372,7 +372,7 @@ FishLanded
 ```
 
 # Working with Prefixes
-_Demostrates how to work with schemas other than "public" in Postgres._
+_Demonstrates how to work with schemas other than "public" in Postgres._
 
 ```elixir
 # The migration
