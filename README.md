@@ -388,9 +388,24 @@ _Demonstrates how to work with schemas other than "public" in Postgres._
   end
   
 # Inserting data
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+    Repo.insert(
+      Ecto.Model.put_meta( 
+      %Account{ identifier: "lew@example.com",  name: "Lew"  }, 
+      prefix: "users"
+      )
+    )
+    Repo.insert(
+      Ecto.Model.put_meta(
+       %Account{ identifier: "mark@example.com", name: "Mark" }, 
+       prefix: "users" 
+      )
+    )
+    Repo.insert(
+     Ecto.Model.put_meta(
+       %Account{ identifier: "john@example.com", name: "John" }, 
+       prefix: "users"
+     )
+    )
 
 #Querying
     query = from accounts in Account
