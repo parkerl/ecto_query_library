@@ -100,6 +100,13 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
+# Count Distinct<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg">
+
+```elixir
+from fish in FishLanded,
+select: count(fish.fisherman_id, :distinct)
+```
+
 # Group By with Max
 
 ```elixir
