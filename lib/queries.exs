@@ -149,7 +149,7 @@ defmodule FishingSpot.Queries do
     Repo.all(
       from fish in FishLanded,
       join: fisherman in assoc(fish, :fisherman),
-      where: fish.length == ^biggest_fish, 
+      where: fish.length == ^biggest_fish,
       select: [fish.length, fisherman.name]
     )
   end
@@ -315,5 +315,10 @@ defmodule FishingSpot.Queries do
   def prefixed do
     query = from accounts in Account
     Repo.all(%{query | prefix: "users"})
+  end
+
+  def distinct_fish_weight do
+    query = from fish in FishLanded, select: fish.weight, distinct: true
+    Repo.all(query)
   end
 end
