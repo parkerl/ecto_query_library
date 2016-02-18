@@ -100,6 +100,13 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
+# Count Distinct<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
+
+```elixir
+from fish in FishLanded,
+select: count(fish.fisherman_id, :distinct)
+```
+
 # Group By with Max
 
 ```elixir
@@ -168,7 +175,7 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
-# Keyword Where
+# Keyword Where<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
 _Demonstrates the use of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
 
 ```elixir
@@ -194,7 +201,7 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       [{1976, 1, 5}] 
 ```
 
-# Keyword Where Referencing Another Model
+# Keyword Where Referencing Another Model<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
 
 _Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
 
@@ -365,7 +372,7 @@ FishLanded
 ```
 
 # Working with Prefixes
-_Demostrates how to work with schemas other than "public" in Postgres._
+_Demonstrates how to work with schemas other than "public" in Postgres._
 
 ```elixir
 # The migration
@@ -381,9 +388,24 @@ _Demostrates how to work with schemas other than "public" in Postgres._
   end
   
 # Inserting data
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+    Repo.insert(
+      Ecto.Model.put_meta( 
+      %Account{ identifier: "lew@example.com",  name: "Lew"  }, 
+      prefix: "users"
+      )
+    )
+    Repo.insert(
+      Ecto.Model.put_meta(
+       %Account{ identifier: "mark@example.com", name: "Mark" }, 
+       prefix: "users" 
+      )
+    )
+    Repo.insert(
+     Ecto.Model.put_meta(
+       %Account{ identifier: "john@example.com", name: "John" }, 
+       prefix: "users"
+     )
+    )
 
 #Querying
     query = from accounts in Account
