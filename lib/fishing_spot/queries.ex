@@ -66,11 +66,6 @@ defmodule FishingSpot.Queries do
       from fish in FishLanded,
       select: %{big_fish: max(fish.length)}
     )
-
-     Repo.one(
-      from fish in {"(select f.* from fish_landed where fish_landed.length > 20)", FishLanded},
-      select: %{big_fish: max(fish.length)}
-    )
   end
 
   def fishy_fish do
@@ -146,10 +141,16 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish_per_fisherman_two_queries do
+    big_fish = Repo.one(
+      from fish in FishLanded,
+      select: max(fish.length)
+        )
+    inspect(big_fish)
+
     Repo.all(
       from fish in FishLanded,
       join: fisherman in assoc(fish, :fisherman),
-      where: fish.length == ^biggest_fish, 
+      where: fish.length == ^big_fish, 
       select: [fish.length, fisherman.name]
     )
   end
@@ -276,8 +277,8 @@ defmodule FishingSpot.Queries do
     |> join(:inner, [fish, foo, bar, baz], fisherman in assoc(fish, :fisherman))
     |> join(:inner, [fish, fisherman],
             trip in assoc(fisherman, :trips))
-    |> join(:inner, [fish, trip],
-            locations in assoc(trip, :locations))
+    |> join(:inner, [fish, fisherman, trips],
+            locations in assoc(trips, :locations))
     |> select([fish], count(fish.id))
 
     IO.inspect query

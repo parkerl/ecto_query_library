@@ -1,5 +1,6 @@
 defmodule FishingSpot.Location do
   use Ecto.Model
+  import Ecto.Changeset
   alias FishingSpot.LocationType
 
   schema "locations" do
@@ -11,4 +12,9 @@ defmodule FishingSpot.Location do
 
     belongs_to :location_type, LocationType
   end
+
+   def changeset(model, params \\ :empty) do
+     model
+       |> cast(params, ~w(name))
+   end
 end
