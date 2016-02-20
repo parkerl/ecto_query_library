@@ -29,6 +29,30 @@ _The query library is currently built using the following setup. Some features a
 
 [Max in two queries](#max_two_step)
 
+[max_self_join](Record with Max Value via Self Join)
+
+[max_subquery](Record with Max Value via Subquery)
+
+[keyword_where](Keyword Where)
+
+[keyword_another_model](Keyword Where Referencing Another Model)
+
+[where_in](Where with In Clause)
+
+[where_not_in](Where with Not In Clause)
+
+[complex_where](Complex Muti-join Multi-where)
+
+[select_fragment](Using a Select Fragment)
+
+[complex_select](Complex Select Logic Using a Fragment)
+
+[partial_preload](Partial-preloading)
+
+[bindings](Binding Fun)
+
+[prefixes](Working with Prefixes)
+
 -------------------------------------------------------------------
 
 # <a name="selects"></a>Simple Queries with Different Select Styles
@@ -98,21 +122,21 @@ Repo.all(
  %{fisherman_dob: #Ecto.Date<1976-01-05>, fisherman_name: "Lew"}]
 ```
 
-# Max<a name="max"></a>
+# <a name="max"></a>Max
 
 ```elixir
 from fish in FishLanded,
 select: max(fish.length)
 ```
 
-# Simple Where<a name="where"></a>
+# <a name="where"></a>Simple Where
 
 ```elixir
 from fish in FishLanded,
 where: fish.length > 24
 ```
 
-# Count<a name="count"></a>
+# <a name="count"></a>Count
 
 ```elixir
 from fish in FishLanded,
@@ -120,14 +144,14 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
-# Count Distinct<a name="count_distinct"></a>
+# <a name="count_distinct"></a>Count Distinct
 
 ```elixir
 from fish in FishLanded,
 select: count(fish.fisherman_id, :distinct)
 ```
 
-# Group By with Max<a name="group_max"></a>
+# <a name="group_max"></a>Group By with Max
 
 ```elixir
 from fish in FishLanded,
@@ -136,7 +160,7 @@ group_by: fisherman.name,
 select: [max(fish.length), fisherman.name]
 ```
 
-# Order By<a name="order"></a>
+# <a name="order"></a>Order By
 _Demonstrates ordering ascending and descending._
 
 ```elixir
@@ -155,7 +179,7 @@ select: fisherman.name
 ["Mark", "Lew", "Kirk", "Joe"]
 ```
 
-# Record with Max Value in Two Steps<a name="max_two_step"></a>
+# <a name="max_two_step"></a>Record with Max Value in Two Steps
 _Demonstrates interpolating the result of one query into another._
 
 ```elixir
@@ -171,7 +195,7 @@ Repo.all(
 )
 ```
 
-# Record with Max Value via Self Join<a name="max_self_join"></a>
+# <a name="max_self_join"></a>Record with Max Value via Self Join
 _Demonstrates left joins, self joins, and conditions in joins. Calculates the
 record with a maximum value by "folding" onto the same table._
 
@@ -183,7 +207,7 @@ where: is_nil(bigger_fish.id),
 select: [fish.length, fisherman.name]
 ```
 
-# Record with Max Value via Subquery
+# <a name="max_subquery"></a>Record with Max Value via Subquery
 _Demonstrates subqueries in where clauses._
 
 ```elixir
@@ -195,7 +219,7 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
-# Keyword Where
+# <a name="keyword_where"></a>Keyword Where
 _Demonstrates the use of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
 
 ```elixir
@@ -221,7 +245,7 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       [{1976, 1, 5}] 
 ```
 
-# Keyword Where Referencing Another Model
+# <a name="keyword_another_model"></a>Keyword Where Referencing Another Model
 
 _Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
 
@@ -239,7 +263,7 @@ _Demonstrates referencing another model in a keyword where clause. Also shows th
         [{1976, 1, 5}] 
 ```
 
-# Where with In Clause
+# <a name="where_in"></a>Where with In Clause
 
 ```elixir
 from fish in FishLanded,
@@ -250,7 +274,7 @@ order_by: fisherman.name,
 select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
 ```
 
-# Where with Not In Clause
+# <a name="where_not_in"></a>Where with Not In Clause
 _Demonstrates the use of `not` to negate an in clause._
 
 ```elixir
@@ -262,7 +286,7 @@ order_by: fisherman.name,
 select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
 ```
 
-# Complex Muti-join Multi-where
+# <a name="complex_where"></a>Complex Muti-join Multi-where
 
 _Demonstrates joins, sub-querying and using map syntax in the select. 
 Uses the `date_add/3` function. Demonstrates how to accomplish a "between" where clause._
@@ -293,7 +317,7 @@ from fish in FishLanded,
   }
 ```
 
-# Using a Select Fragment
+# <a name="select_fragment"></a>Using a Select Fragment
 ## with Named Grouping and Positional Ordering
 
 _Demonstrates how to use a named column from a fragment or a positional
@@ -309,7 +333,7 @@ select: %{
 }
 ```
 
-# Complex Select Logic Using a Fragment
+# <a name="complex_select"></a>Complex Select Logic Using a Fragment
 
 _Demonstrates how to use multiple columns to calculate a value.
 Also orders descending using positional column selection._
@@ -329,7 +353,7 @@ select: %{
 ```
 
 
-# Partial-preloading
+# <a name="partial_preload"></a>Partial-preloading
 
 _Demonstrates how to select only parts of a join model in a preload. 
 Uses both map and list select syntax._
@@ -353,7 +377,7 @@ Uses both map and list select syntax._
     fisherman.fish_landed |> IO.inspect
 ```
 
-# Binding Fun
+# <a name="bindings"></a>Binding Fun
 
 _Demonstrates that bindings are order and not name dependent. See [http://www.glydergun.com/a-bit-about-bindings/](http://www.glydergun.com/a-bit-about-bindings/)._
 
@@ -391,7 +415,7 @@ FishLanded
       |> select([whatever], count(whatever.id))
 ```
 
-# Working with Prefixes
+# <a name="prefixes"></a>Working with Prefixes
 _Demonstrates how to work with schemas other than "public" in Postgres._
 
 ```elixir
