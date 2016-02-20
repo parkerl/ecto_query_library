@@ -318,7 +318,9 @@ defmodule FishingSpot.Queries do
   end
 
   def distinct_fish_weight do
-    query = from fish in FishLanded, select: fish.weight, distinct: true
+    query = from fish in FishLanded,
+    select: fish.weight,
+    distinct: true
     Repo.all(query)
   end
 end

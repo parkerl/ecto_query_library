@@ -14,6 +14,7 @@ _The query library is currently built using the following setup. Some features a
 # Table of Contents
  
 - [Select Styles](#selects)
+- [Select Distinct](#select_distinct)
 - [Max](#max)
 - [Where](#where)
 - [Count](#count)
@@ -101,6 +102,16 @@ Repo.all(
  %{fisherman_dob: #Ecto.Date<1978-03-05>, fisherman_name: "Kirk"},
  %{fisherman_dob: #Ecto.Date<1973-10-15>, fisherman_name: "Joe"},
  %{fisherman_dob: #Ecto.Date<1976-01-05>, fisherman_name: "Lew"}]
+```
+
+# <a name="select_distinct"></a>Select Distinct
+
+```elixir
+from fish in FishLanded,
+select: fish.weight,
+distinct: true
+
+12:18:21.346 [debug] SELECT DISTINCT f0."weight" FROM "fish_landed" AS f0 [] OK query=9.5ms decode=3.0ms
 ```
 
 # <a name="max"></a>Max
