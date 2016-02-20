@@ -321,6 +321,14 @@ defmodule FishingSpot.Queries do
     query = from fish in FishLanded,
     select: fish.weight,
     distinct: true
+
+    Repo.all(query)
+  end
+
+  def distinct_fish_weight_with_expression do
+    query = from fish in FishLanded,
+    distinct: fish.weight
+
     Repo.all(query)
   end
 end

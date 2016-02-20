@@ -15,6 +15,7 @@ _The query library is currently built using the following setup. Some features a
  
 - [Select Styles](#selects)
 - [Select Distinct](#select_distinct)
+- [Distinct on Expression](#distinct_expression)
 - [Max](#max)
 - [Where](#where)
 - [Count](#count)
@@ -112,6 +113,28 @@ select: fish.weight,
 distinct: true
 
 12:18:21.346 [debug] SELECT DISTINCT f0."weight" FROM "fish_landed" AS f0 [] OK query=9.5ms decode=3.0ms
+```
+
+# <a name="select_distinct"></a>Distinct On Expression 
+
+```elixir
+from fish in FishLanded,
+distinct: fish.weight
+
+2:26:59.260 [debug] SELECT DISTINCT ON (f0."weight") f0."id", f0."inserted_at", f0."updated_at", f0."date_and_time", f0."weight", f0."length", f0."fisherman_id", f0."location_id", f0."fly_type_id", f0."fish_species_id" FROM "fish_landed" AS f0 [] OK query=3.3ms decode=0.1ms queue=0.1ms
+
+[%FishingSpot.FishLanded{__meta__: #Ecto.Schema.Metadata<:loaded>,
+    date_and_time: #Ecto.DateTime<2012-06-12 21:51:26>,
+    fish_species: #Ecto.Association.NotLoaded<association :fish_species is not loaded>,
+    fish_species_id: 1,
+    fisherman: #Ecto.Association.NotLoaded<association :fisherman is not loaded>,
+    fisherman_id: 1,
+    fly_type: #Ecto.Association.NotLoaded<association :fly_type is not loaded>,
+    fly_type_id: 3, id: 886, inserted_at: #Ecto.DateTime<2016-02-18 04:51:26>,
+    length: #Decimal<6>,
+    location: #Ecto.Association.NotLoaded<association :location is not loaded>,
+    location_id: 1, updated_at: #Ecto.DateTime<2016-02-18 04:51:26>,
+    weight: #Decimal<1>},...
 ```
 
 # <a name="max"></a>Max
