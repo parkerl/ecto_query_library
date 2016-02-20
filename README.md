@@ -29,29 +29,29 @@ _The query library is currently built using the following setup. Some features a
 
 [Max in two queries](#max_two_step)
 
-[max_self_join](Record with Max Value via Self Join)
+[Record with Max Value via Self Join](#max_self_join)
 
-[max_subquery](Record with Max Value via Subquery)
+[Record with Max Value via Subquery](#max_subquery)
 
-[keyword_where](Keyword Where)
+[Keyword Where](#keyword_where)
 
-[keyword_another_model](Keyword Where Referencing Another Model)
+[Keyword Where Referencing Another Model](#keyword_another_model)
 
-[where_in](Where with In Clause)
+[Where with In Clause](#where_in)
 
-[where_not_in](Where with Not In Clause)
+[Where with Not In Clause](#where_not_in)
 
-[complex_where](Complex Muti-join Multi-where)
+[Complex Muti-join Multi-where](#complex_where)
 
-[select_fragment](Using a Select Fragment)
+[Using a Select Fragment](#select_fragment)
 
-[complex_select](Complex Select Logic Using a Fragment)
+[Complex Select Logic Using a Fragment](#complex_select)
 
-[partial_preload](Partial-preloading)
+[Partial-preloading](#partial_preload)
 
-[bindings](Binding Fun)
+[Binding Fun](#bindings)
 
-[prefixes](Working with Prefixes)
+[Working with Prefixes](#prefixes)
 
 -------------------------------------------------------------------
 
