@@ -11,10 +11,27 @@ _The query library is currently built using the following setup. Some features a
  - Ecto master
  - Postgres 9.4
  
- Table of Contents
- ![Select Styles](#selects)
+# Table of Contents
+ 
+[Select Styles](#selects)
 
-# Simple Queries with Different Select Styles<a name=selects></a>
+[Max](#max)
+
+[Where](#where)
+
+[Count](#count)
+
+[Count Distinct](#count_distinct)
+
+[Group By with Max](#group_max)
+
+[Order By](#order)
+
+[Max in two queries](#max_two_step)
+
+-------------------------------------------------------------------
+
+# Simple Queries with Different Select Styles<a name="selects"></a>
 _Demonstrates how the various select styles change the return structure._
 
 ```elixir
@@ -81,21 +98,21 @@ Repo.all(
  %{fisherman_dob: #Ecto.Date<1976-01-05>, fisherman_name: "Lew"}]
 ```
 
-# Max
+# Max<a name="max"></a>
 
 ```elixir
 from fish in FishLanded,
 select: max(fish.length)
 ```
 
-# Simple Where
+# Simple Where<a name="where"></a>
 
 ```elixir
 from fish in FishLanded,
 where: fish.length > 24
 ```
 
-# Count
+# Count<a name="count"></a>
 
 ```elixir
 from fish in FishLanded,
@@ -103,14 +120,14 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
-# Count Distinct
+# Count Distinct<a name="count_distinct"></a>
 
 ```elixir
 from fish in FishLanded,
 select: count(fish.fisherman_id, :distinct)
 ```
 
-# Group By with Max
+# Group By with Max<a name="group_max"></a>
 
 ```elixir
 from fish in FishLanded,
@@ -119,7 +136,7 @@ group_by: fisherman.name,
 select: [max(fish.length), fisherman.name]
 ```
 
-# Order By
+# Order By<a name="order"></a>
 _Demonstrates ordering ascending and descending._
 
 ```elixir
@@ -138,7 +155,7 @@ select: fisherman.name
 ["Mark", "Lew", "Kirk", "Joe"]
 ```
 
-# Record with Max Value in Two Steps
+# Record with Max Value in Two Steps<a name="max_two_step"></a>
 _Demonstrates interpolating the result of one query into another._
 
 ```elixir
@@ -154,7 +171,7 @@ Repo.all(
 )
 ```
 
-# Record with Max Value via Self Join
+# Record with Max Value via Self Join<a name="max_self_join"></a>
 _Demonstrates left joins, self joins, and conditions in joins. Calculates the
 record with a maximum value by "folding" onto the same table._
 
