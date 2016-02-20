@@ -13,45 +13,26 @@ _The query library is currently built using the following setup. Some features a
  
 # Table of Contents
  
-[Select Styles](#selects)
-
-[Max](#max)
-
-[Where](#where)
-
-[Count](#count)
-
-[Count Distinct](#count_distinct)
-
-[Group By with Max](#group_max)
-
-[Order By](#order)
-
-[Max in two queries](#max_two_step)
-
-[Record with Max Value via Self Join](#max_self_join)
-
-[Record with Max Value via Subquery](#max_subquery)
-
-[Keyword Where](#keyword_where)
-
-[Keyword Where Referencing Another Model](#keyword_another_model)
-
-[Where with In Clause](#where_in)
-
-[Where with Not In Clause](#where_not_in)
-
-[Complex Muti-join Multi-where](#complex_where)
-
-[Using a Select Fragment](#select_fragment)
-
-[Complex Select Logic Using a Fragment](#complex_select)
-
-[Partial-preloading](#partial_preload)
-
-[Binding Fun](#bindings)
-
-[Working with Prefixes](#prefixes)
+- [Select Styles](#selects)
+- [Max](#max)
+- [Where](#where)
+- [Count](#count)
+- [Count Distinct](#count_distinct)
+- [Group By with Max](#group_max)
+- [Order By](#order)
+- [Max in two queries](#max_two_step)
+- [Record with Max Value via Self Join](#max_self_join)
+- [Record with Max Value via Subquery](#max_subquery)
+- [Keyword Where](#keyword_where)
+- [Keyword Where Referencing Another Model](#keyword_another_model)
+- [Where with In Clause](#where_in)
+- [Where with Not In Clause](#where_not_in)
+- [Complex Muti-join Multi-where](#complex_where)
+- [Using a Select Fragment](#select_fragment)
+- [Complex Select Logic Using a Fragment](#complex_select)
+- [Partial-preloading](#partial_preload)
+- [Binding Fun](#bindings)
+- [Working with Prefixes](#prefixes)
 
 -------------------------------------------------------------------
 
