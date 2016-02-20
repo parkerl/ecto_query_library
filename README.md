@@ -31,7 +31,7 @@ _The query library is currently built using the following setup. Some features a
 
 -------------------------------------------------------------------
 
-# Simple Queries with Different Select Styles<a name="selects"></a>
+# <a name="selects"></a>Simple Queries with Different Select Styles
 _Demonstrates how the various select styles change the return structure._
 
 ```elixir
