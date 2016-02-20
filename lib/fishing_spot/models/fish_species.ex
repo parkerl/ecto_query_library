@@ -1,5 +1,5 @@
 defmodule FishingSpot.FishSpecies do
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "fish_species" do
     timestamps

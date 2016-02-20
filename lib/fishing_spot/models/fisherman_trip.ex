@@ -2,7 +2,7 @@ defmodule FishingSpot.FishermanTrip do
   alias FishingSpot.Fisherman
   alias FishingSpot.Trip
 
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "fishermen_trips" do
     timestamps

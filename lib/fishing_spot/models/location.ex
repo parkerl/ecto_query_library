@@ -1,5 +1,5 @@
 defmodule FishingSpot.Location do
-  use Ecto.Model
+  use Ecto.Schema
   import Ecto.Changeset
   alias FishingSpot.LocationType
 

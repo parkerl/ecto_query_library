@@ -1,5 +1,5 @@
 defmodule FishingSpot.Test do
-  use Ecto.Model
+  use Ecto.Schema
 
   @primary_key {:bigid, :id, autogenerate: true}
 

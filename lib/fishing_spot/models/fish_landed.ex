@@ -1,9 +1,6 @@
 defmodule FishingSpot.FishLanded do
-  alias FishingSpot.Fisherman
-  alias FishingSpot.FishLanded
-  alias FishingSpot.FishSpecies
-  alias FishingSpot.FlyType
-  use Ecto.Model
+  alias FishingSpot.{Fisherman, FishSpecies, FlyType}
+  use Ecto.Schema
   import Ecto.Changeset
 
   schema "fish_landed" do

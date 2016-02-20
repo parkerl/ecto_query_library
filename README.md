@@ -7,11 +7,14 @@ For the full story behind this project and the queries start here [Diving into E
 # Versions
 _The query library is currently built using the following setup. Some features are only avaiable on Ecto master. I will strive to indicate which queries will only run on master._
 
- - Elixir 1.1.1
+ - Elixir 1.2
  - Ecto master
  - Postgres 9.4
+ 
+ Table of Contents
+ ![Select Styles](#selects)
 
-# Simple Queries with Different Select Styles
+# Simple Queries with Different Select Styles<a name=selects></a>
 _Demonstrates how the various select styles change the return structure._
 
 ```elixir
@@ -100,7 +103,7 @@ select: count(fish.id),
 where: fish.length > 24
 ```
 
-# Count Distinct<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
+# Count Distinct
 
 ```elixir
 from fish in FishLanded,
@@ -175,7 +178,7 @@ where: fragment(
 select: [fish.length, fisherman.name]
 ```
 
-# Keyword Where<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
+# Keyword Where
 _Demonstrates the use of a keyword list for generating where clauses. Values are `AND`d. Also, shows that variables will be interpolated._
 
 ```elixir
@@ -201,7 +204,7 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       [{1976, 1, 5}] 
 ```
 
-# Keyword Where Referencing Another Model<img src="https://raw.githubusercontent.com/parkerl/ecto_query_library/master/master.jpg" style="display: inline-block; padding-left: 5px">
+# Keyword Where Referencing Another Model
 
 _Demonstrates referencing another model in a keyword where clause. Also shows that no join condition is required by `join`. It defaults to `ON TRUE`._
 
@@ -321,7 +324,7 @@ Uses both map and list select syntax._
         |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
         |> preload([fisherman, fish], [fish_landed: fish])
 
-    Repo.one(query).fisherman.fish_landed |> IO.inspect
+    Repo.first(query).fisherman.fish_landed |> IO.inspect
 
     query = Fisherman
         |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
@@ -329,7 +332,7 @@ Uses both map and list select syntax._
         |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
         |> preload([fisherman, fish], [fish_landed: fish])
 
-    fisherman = Repo.one(query) |> List.first
+    fisherman = Repo.first(query) |> List.first
     fisherman.fish_landed |> IO.inspect
 ```
 

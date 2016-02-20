@@ -1,5 +1,5 @@
 defmodule FishingSpot.Trip do
-  use Ecto.Model
+  use Ecto.Schema
   alias FishingSpot.LocationTrip
 
   schema "trips" do

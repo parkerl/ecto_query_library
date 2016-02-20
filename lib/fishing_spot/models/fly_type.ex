@@ -1,5 +1,5 @@
 defmodule FishingSpot.FlyType do
-  use Ecto.Model
+  use Ecto.Schema
 
   schema "fly_types" do
     timestamps

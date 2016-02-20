@@ -47,22 +47,22 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish do
-    Repo.one(
+    Repo.all(
       from fish in FishLanded,
       select: max(fish.length)
     ) |> IO.inspect
 
-    Repo.one(
+    Repo.all(
       from fish in FishLanded,
       select: {max(fish.length)}
     ) |> IO.inspect
 
-    Repo.one(
+    Repo.all(
       from fish in FishLanded,
       select: [max(fish.length)]
     ) |> IO.inspect
 
-    Repo.one(
+    Repo.all(
       from fish in FishLanded,
       select: %{big_fish: max(fish.length)}
     )
@@ -141,11 +141,10 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish_per_fisherman_two_queries do
-    big_fish = Repo.one(
+    [big_fish] = Repo.all(
       from fish in FishLanded,
       select: max(fish.length)
-        )
-    inspect(big_fish)
+     )
 
     Repo.all(
       from fish in FishLanded,
@@ -177,7 +176,7 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish_details do
-    Repo.one(
+    Repo.first(
       from fish in FishLanded,
       join: fly_type in assoc(fish, :fly_type),
       join: fish_species in assoc(fish, :fish_species),
@@ -301,7 +300,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    Repo.one(query).fisherman.fish_landed |> IO.inspect
+    Repo.first(query).fisherman.fish_landed |> IO.inspect
 
     query = Fisherman
     |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
@@ -309,7 +308,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    fisherman = Repo.one(query) |> List.first
+    fisherman = Repo.first(query) |> List.first
     fisherman.fish_landed |> IO.inspect
   end
 

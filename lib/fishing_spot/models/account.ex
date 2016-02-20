@@ -1,5 +1,5 @@
 defmodule FishingSpot.Account do
-  use Ecto.Model
+  use Ecto.Schema
   import Ecto.Changeset
 
   schema "accounts" do
