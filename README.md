@@ -16,6 +16,7 @@ _The query library is currently built using the following setup. Some features a
 - [Select Styles](#selects)
 - [Select Distinct](#select_distinct)
 - [Distinct on Expression](#distinct_expression)
+- [Distinct with Order By](#distinct_order)
 - [Max](#max)
 - [Where](#where)
 - [Count](#count)
@@ -135,6 +136,31 @@ distinct: fish.weight
     location: #Ecto.Association.NotLoaded<association :location is not loaded>,
     location_id: 1, updated_at: #Ecto.DateTime<2016-02-18 04:51:26>,
     weight: #Decimal<1>},...
+```
+
+# <a name="distinct_order"></a>Distinct with Order By
+
+```elixir
+from fish in FishLanded,
+distinct: fish.weight,
+order_by: fish.date_and_time
+
+
+12:37:15.371 [debug] SELECT DISTINCT ON (f0."weight") f0."id", f0."inserted_at", f0."updated_at", f0."date_and_time", f0."weight", f0."length", f0."fisherman_id", f0."location_id", f0."fly_type_id", f0."fish_species_id" FROM "fish_landed" AS f0 
+ORDER BY f0."weight", f0."date_and_time" [] OK query=4.9ms decode=0.2ms
+
+[%FishingSpot.FishLanded{__meta__: #Ecto.Schema.Metadata<:loaded>,
+    date_and_time: #Ecto.DateTime<2012-06-06 21:51:25>,
+    fish_species: #Ecto.Association.NotLoaded<association :fish_species is not loaded>,
+    fish_species_id: 2,
+    fisherman: #Ecto.Association.NotLoaded<association :fisherman is not loaded>,
+    fisherman_id: 3,
+    fly_type: #Ecto.Association.NotLoaded<association :fly_type is not loaded>,
+    fly_type_id: 2, id: 571, inserted_at: #Ecto.DateTime<2016-02-18 04:51:25>,
+    length: #Decimal<1>,
+    location: #Ecto.Association.NotLoaded<association :location is not loaded>,
+    location_id: 2, updated_at: #Ecto.DateTime<2016-02-18 04:51:25>,
+    weight: #Decimal<1>}, ...
 ```
 
 # <a name="max"></a>Max

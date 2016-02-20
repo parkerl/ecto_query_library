@@ -331,4 +331,12 @@ defmodule FishingSpot.Queries do
 
     Repo.all(query)
   end
+
+  def distinct_fish_weight_with_order_by do
+    query = from fish in FishLanded,
+    distinct: fish.weight,
+    order_by: fish.date_and_time
+
+    Repo.all(query)
+  end
 end
