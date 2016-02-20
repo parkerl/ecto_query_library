@@ -115,7 +115,7 @@ distinct: true
 12:18:21.346 [debug] SELECT DISTINCT f0."weight" FROM "fish_landed" AS f0 [] OK query=9.5ms decode=3.0ms
 ```
 
-# <a name="select_distinct"></a>Distinct On Expression 
+# <a name="distinct_expression"></a>Distinct On Expression 
 
 ```elixir
 from fish in FishLanded,
