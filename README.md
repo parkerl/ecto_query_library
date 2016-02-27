@@ -1,6 +1,6 @@
 This is basically the TL;DR for my Diving into Ecto series. I always hate having to skim a long blog post looking for a quick answer, and I know you do too. With that in mind I'm going to make this post a list of common and not so common queries you can do with Ecto. I will keep it up-to-date as I discover more interesting queries and ways of using Ecto. 
 
-The repo with this post reproduced in the README can be found at [https://github.com/parkerl/ecto_query_library](https://github.com/parkerl/ecto_query_library). The queries below can be found in a usable form in `lib/queries.exs`. If you find something incorrect please open a pull request. I would like to make this a community resource rather than my personal toolbox. 
+The repo with this post reproduced in the README can be found at [https://github.com/parkerl/ecto_query_library](https://github.com/parkerl/ecto_query_library). The queries below can be found in a usable form in `lib/fishing_spot/queries.ex`. If you find something incorrect please open a pull request. I would like to make this a community resource rather than my personal toolbox. 
 
 For the full story behind this project and the queries start here [Diving into Ecto: Part 1](http://www.glydergun.com/diving-into-ecto/).
 
