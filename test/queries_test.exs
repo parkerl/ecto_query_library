@@ -30,7 +30,10 @@ defmodule FishingSpot.QueriesTest do
     &Queries.fish_per_day/0,
     &Queries.composed_biggest_fish_details/0,
     &Queries.prefixed/0,
-    &Queries.distinct_fish_weight/0
+    &Queries.distinct_fish_weight/0,
+    &Queries.distinct_fish_weight_with_expression/0,
+    &Queries.distinct_fish_weight_with_order_by/0,
+    &Queries.biggest_fish_per_fisherman_having/0,
   ]
 
   Enum.each(queries, fn(query)->
