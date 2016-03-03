@@ -22,6 +22,7 @@ _The query library is currently built using the following setup. Some features a
 - [Count](#count)
 - [Count Distinct](#count_distinct)
 - [Group By with Max](#group_max)
+- [Group By with Having](#group_having)
 - [Order By](#order)
 - [Max in two queries](#max_two_step)
 - [Record with Max Value via Self Join](#max_self_join)
@@ -198,6 +199,16 @@ select: count(fish.fisherman_id, :distinct)
 from fish in FishLanded,
 join: fisherman in assoc(fish, :fisherman),
 group_by: fisherman.name,
+select: [max(fish.length), fisherman.name]
+```
+
+# <a name="group_having"></a>Group By with Having
+
+```elixir
+from fish in FishLanded,
+join: fisherman in assoc(fish, :fisherman),
+group_by: fisherman.name,
+having: count(fish.id) > 15,
 select: [max(fish.length), fisherman.name]
 ```
 

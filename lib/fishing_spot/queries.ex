@@ -339,4 +339,14 @@ defmodule FishingSpot.Queries do
 
     Repo.all(query)
   end
+
+  def biggest_fish_per_fisherman_having do
+    Repo.all(
+      from fish in FishLanded,
+      join: fisherman in assoc(fish, :fisherman),
+      group_by: fisherman.name,
+      having: count(fish.id) > 15,
+      select: [max(fish.length), fisherman.name]
+    )
+  end
 end
