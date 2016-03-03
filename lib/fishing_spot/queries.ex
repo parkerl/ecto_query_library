@@ -349,4 +349,11 @@ defmodule FishingSpot.Queries do
       select: [max(fish.length), fisherman.name]
     )
   end
+
+  def all_fish_limit_10 do
+    Repo.all(
+      from fish in FishLanded,
+      limit: 10
+    )
+  end
 end

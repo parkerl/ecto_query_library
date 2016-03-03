@@ -23,6 +23,7 @@ _The query library is currently built using the following setup. Some features a
 - [Count Distinct](#count_distinct)
 - [Group By with Max](#group_max)
 - [Group By with Having](#group_having)
+- [Limit](#limit)
 - [Order By](#order)
 - [Max in two queries](#max_two_step)
 - [Record with Max Value via Self Join](#max_self_join)
@@ -210,6 +211,13 @@ join: fisherman in assoc(fish, :fisherman),
 group_by: fisherman.name,
 having: count(fish.id) > 15,
 select: [max(fish.length), fisherman.name]
+```
+
+# <a name="limit"></a>Limit
+
+```elixir
+from fish in FishLanded,
+limit: 10
 ```
 
 # <a name="order"></a>Order By
