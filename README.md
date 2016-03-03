@@ -24,6 +24,7 @@ _The query library is currently built using the following setup. Some features a
 - [Group By with Max](#group_max)
 - [Group By with Having](#group_having)
 - [Limit](#limit)
+- [Limit and Offset](#limit_offset)
 - [Order By](#order)
 - [Max in two queries](#max_two_step)
 - [Record with Max Value via Self Join](#max_self_join)
@@ -218,6 +219,20 @@ select: [max(fish.length), fisherman.name]
 ```elixir
 from fish in FishLanded,
 limit: 10
+```
+
+# <a name="limit_offset"></a>Limit and Offset
+_Demonstrates the use of limit and offset using a calculated value. Also, demonstrates the use of `Repo.aggregate/3`._
+
+```elixir
+fish_count = Repo.aggregate(FishLanded, :count, :id) |> div(2)
+
+Repo.all(
+ from fish in FishLanded,
+ limit: 10,
+ offset: ^fish_count
+)
+
 ```
 
 # <a name="order"></a>Order By

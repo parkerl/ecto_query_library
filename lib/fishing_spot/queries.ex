@@ -356,4 +356,13 @@ defmodule FishingSpot.Queries do
       limit: 10
     )
   end
+
+  def all_fish_limit_10_offset_half do
+    fish_count = Repo.aggregate(FishLanded, :count, :id) |> div(2)
+    Repo.all(
+      from fish in FishLanded,
+      limit: 10,
+      offset: ^fish_count
+    )
+  end
 end
