@@ -388,4 +388,45 @@ defmodule FishingSpot.Queries do
       offset: ^fish_count
     )
   end
+
+  def comp do
+    query = from fish in FishLanded,
+    join: fisherman in assoc(fish, :fisherman),
+    where: fish.length > 2
+
+    query = from fish in query,
+     join: fly in assoc(fish, :fly_type),
+     where: fly.name == "Muddler Minnow"
+
+     Repo.all query
+
+     # query = Fisherman
+     # |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+
+     # big_fish = query
+     # |> where([fish], fish.length > 2)
+
+     # type = :fly_type
+     # big_fish_on_muddler = query
+     # |> join(:inner, [fish], fly in assoc(fish, :fly_type))
+     # |> where([fish, fly], fly.name == "Muddler Minnow")
+
+     # Author
+     # |> popular_posts
+     # |> with_tags(tags)
+
+     # def popular_posts(query) do
+     #   query
+     #   |> join(:inner, [author], post in assoc(author, :post))
+     #   |> join(:inner, [author, post], comment in assoc(post, :comments))
+     #   |> where([author, post, comment],  comment.likes == 4)
+     # end
+
+     # def posts_with_tags(query, tags) do
+     #   query
+     #   |> join(:inner, [post], a in assoc(post, :tags))
+     #   |> where([post, tags],  tags.tag in(^tags))
+     # end
+
+  end
 end
