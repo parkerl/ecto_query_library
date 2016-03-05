@@ -239,7 +239,7 @@ Repo.all(
 ```
 
 # <a name="order"></a>Order By
-_Demonstrates ordering ascending and descending._
+_Demonstrates ordering ascending and descending including keyword syntax._
 
 ```elixir
 from fisherman in Fisherman,
@@ -251,6 +251,20 @@ select: fisherman.name
 
 from fisherman in Fisherman,
 order_by: [desc: fisherman.name],
+select: fisherman.name
+
+21:50:02.025 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name" DESC [] OK query=0.5ms
+["Mark", "Lew", "Kirk", "Joe"]
+
+from fisherman in Fisherman,
+order_by: :name,
+select: fisherman.name
+
+21:50:02.022 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name" [] OK query=4.0ms
+["Joe", "Kirk", "Lew", "Mark"]
+
+from fisherman in Fisherman,
+order_by: [desc: :name],
 select: fisherman.name
 
 21:50:02.025 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name" DESC [] OK query=0.5ms
