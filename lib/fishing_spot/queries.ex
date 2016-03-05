@@ -175,6 +175,17 @@ defmodule FishingSpot.Queries do
     )
   end
 
+  def biggest_fish_catcher_join do
+    Repo.all(
+      from fish in FishLanded,
+      join: fisherman in assoc(fish, :fisherman),
+      join: big_fish in fragment(
+        "(SELECT MAX(biggest_fish.length) AS length FROM fish_landed biggest_fish)"
+      ), on: fish.length == big_fish.length,
+      select: [fish.length, fisherman.name]
+    )
+  end
+
   def biggest_fish_details do
     Repo.first(
       from fish in FishLanded,

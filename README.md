@@ -26,9 +26,12 @@ _The query library is currently built using the following setup. Some features a
 - [Limit](#limit)
 - [Limit and Offset](#limit_offset)
 - [Order By](#order)
+- [Joins](#complex_where)
+- [Joining with a Fragment](#max_join)
 - [Max in two queries](#max_two_step)
 - [Record with Max Value via Self Join](#max_self_join)
 - [Record with Max Value via Subquery](#max_subquery)
+- [Record with Max Value via Join Fragment](#max_join)
 - [Keyword Where](#keyword_where)
 - [Keyword Where Referencing Another Model](#keyword_another_model)
 - [Where with In Clause](#where_in)
@@ -291,6 +294,19 @@ join: fisherman in assoc(fish, :fisherman),
 where: fragment(
     "? IN (SELECT MAX(biggest_fish.length) FROM fish_landed biggest_fish)", fish.length
   ),
+select: [fish.length, fisherman.name]
+```
+
+# <a name="max_join"></a>Record with Max Value via Join Fragment
+_Demonstrates the use of fragment in joins._
+
+```elixir
+from fish in FishLanded,
+join: fisherman in assoc(fish, :fisherman),
+join: big_fish in fragment(
+    "(SELECT MAX(biggest_fish.length) AS length FROM fish_landed biggest_fish)"
+  ),
+on: fish.length == big_fish.length,
 select: [fish.length, fisherman.name]
 ```
 

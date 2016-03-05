@@ -36,6 +36,7 @@ defmodule FishingSpot.QueriesTest do
     &Queries.biggest_fish_per_fisherman_having/0,
     &Queries.all_fish_limit_10/0,
     &Queries.all_fish_limit_10_offset_half/0,
+    &Queries.biggest_fish_catcher_join/0,
   ]
 
   Enum.each(queries, fn(query)->
