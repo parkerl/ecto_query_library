@@ -269,6 +269,14 @@ select: fisherman.name
 
 21:50:02.025 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name" DESC [] OK query=0.5ms
 ["Mark", "Lew", "Kirk", "Joe"]
+
+fields = [:name, :date_of_birth]
+13:40:42.863 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name", f0."date_of_birth" [] OK query=0.2ms
+from fisherman in Fisherman,
+order_by: ^fields,
+select: fisherman.name
+
+13:40:42.863 [debug] SELECT f0."name" FROM "fishermen" AS f0 ORDER BY f0."name", f0."date_of_birth" [] OK query=0.2ms
 ```
 
 # <a name="max_two_step"></a>Record with Max Value in Two Steps

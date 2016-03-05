@@ -56,6 +56,14 @@ defmodule FishingSpot.Queries do
       order_by: [desc: :name],
       select: fisherman.name
     )
+
+    fields = [:name, :date_of_birth]
+
+    Repo.all(
+      from fisherman in Fisherman,
+      order_by: ^fields,
+      select: fisherman.name
+    )
   end
 
   def biggest_fish do
