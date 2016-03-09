@@ -283,16 +283,17 @@ select: fisherman.name
 _Demonstrates interpolating the result of one query into another._
 
 ```elixir
-
-biggest_fish = from fish in FishLanded,
-               select: max(fish.length)
-
-Repo.all(
+[big_fish] = Repo.all(
   from fish in FishLanded,
-  join: fisherman in assoc(fish, :fisherman),
-  where: fish.length == ^biggest_fish, 
-  select: [fish.length, fisherman.name]
-)
+  select: max(fish.length)
+ )
+
+ Repo.all(
+   from fish in FishLanded,
+   join: fisherman in assoc(fish, :fisherman),
+   where: fish.length == ^big_fish, 
+   select: [fish.length, fisherman.name]
+ )
 ```
 
 # <a name="max_self_join"></a>Record with Max Value via Self Join
