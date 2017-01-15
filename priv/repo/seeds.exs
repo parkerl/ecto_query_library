@@ -43,7 +43,7 @@ defmodule FishingSpot.Data do
     lake         = Repo.insert! %LocationType{  name: "Lake"         }
     pond         = Repo.insert! %LocationType{  name: "Pond"         }
     spring_creek = Repo.insert! %LocationType{  name: "Spring Creek" }
-    stream       = Repo.insert! %LocationType{  name: "Stream"       }
+    _stream      = Repo.insert! %LocationType{  name: "Stream"       }
     river        = Repo.insert! %LocationType{  name: "River"        }
     tail_water   = Repo.insert! %LocationType{  name: "Tail Water"   }
 
@@ -117,7 +117,7 @@ defmodule FishingSpot.Data do
     Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
   end
 
-  def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
+  def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, _trips, fish_types) do
     :random.seed(:erlang.system_time)
     fisherman           = Enum.shuffle(fishermen                 ) |> List.first
     fisherman           = Repo.preload(fisherman, :trips         )
