@@ -169,7 +169,7 @@ defmodule FishingSpot.Queries do
     Repo.all(
       from fish in FishLanded,
       join: fisherman in assoc(fish, :fisherman),
-      where: fish.length == ^big_fish, 
+      where: fish.length == ^big_fish,
       select: [fish.length, fisherman.name]
     )
   end
@@ -207,8 +207,7 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish_details do
-    Repo.first(
-      from fish in FishLanded,
+    query = from fish in FishLanded,
       join: fly_type in assoc(fish, :fly_type),
       join: fish_species in assoc(fish, :fish_species),
       join: fisherman in assoc(fish, :fisherman),
@@ -230,7 +229,8 @@ defmodule FishingSpot.Queries do
         trip_end: trip.end_date,
         location: locations.name,
         location_type: location_types.name
-      })
+      }
+    Repo.one(first(query))
   end
 
   def complex_select_fragment do
@@ -331,7 +331,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    Repo.first(query).fisherman.fish_landed |> IO.inspect
+    Repo.one(first(query)).fisherman.fish_landed |> IO.inspect
 
     query = Fisherman
     |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
@@ -339,7 +339,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    fisherman = Repo.first(query) |> List.first
+    fisherman = Repo.one(query) |> Map.get(:fisherman)
     fisherman.fish_landed |> IO.inspect
   end
 
