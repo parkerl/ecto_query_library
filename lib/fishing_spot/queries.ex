@@ -304,21 +304,21 @@ defmodule FishingSpot.Queries do
     Repo.all(query)
 
     query = FishLanded
-    |> join(:inner, [fish, foo, bar, baz], fisherman in assoc(fish, :fisherman))
-    |> join(:inner, [fish, fisherman],
-            trip in assoc(fisherman, :trips))
-    |> join(:inner, [fish, fisherman, trips],
-            locations in assoc(trips, :locations))
-    |> select([fish], count(fish.id))
+      |> join(:inner, [fish, foo, bar, baz], fisherman in assoc(fish, :fisherman))
+      |> join(:inner, [fish, fisherman],
+              trip in assoc(fisherman, :trips))
+      |> join(:inner, [fish, fisherman, trips],
+              locations in assoc(trips, :locations))
+      |> select([fish], count(fish.id))
 
     IO.inspect query
     Repo.all(query)
 
     query = FishLanded
-    |> join(:inner, [fish], fisherman in assoc(fish, :fisherman))
-    |> join(:inner, [fish, fisherman],
-            trip in assoc(fisherman, :trips))
-    |> select([fish], count(fish.id))
+      |> join(:inner, [fish], fisherman in assoc(fish, :fisherman))
+      |> join(:inner, [fish, fisherman],
+              trip in assoc(fisherman, :trips))
+      |> select([fish], count(fish.id))
 
     IO.inspect query
     Repo.all(query)
@@ -326,18 +326,18 @@ defmodule FishingSpot.Queries do
 
   def select_associated do
     query = Fisherman
-    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
-    |> where([fisherman], fisherman.id == 1)
-    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
-    |> preload([fisherman, fish], [fish_landed: fish])
+      |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+      |> where([fisherman], fisherman.id == 1)
+      |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+      |> preload([fisherman, fish], [fish_landed: fish])
 
     Repo.one(first(query)).fisherman.fish_landed |> IO.inspect
 
     query = Fisherman
-    |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
-    |> where([fisherman], fisherman.id == 1)
-    |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
-    |> preload([fisherman, fish], [fish_landed: fish])
+      |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
+      |> where([fisherman], fisherman.id == 1)
+      |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
+      |> preload([fisherman, fish], [fish_landed: fish])
 
     fisherman = Repo.one(query) |> Map.get(:fisherman)
     fisherman.fish_landed |> IO.inspect
