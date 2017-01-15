@@ -5,7 +5,7 @@ defmodule FishingSpot.FishermanTrip do
   use Ecto.Schema
 
   schema "fishermen_trips" do
-    timestamps
+    timestamps()
     belongs_to :fisherman, Fisherman
     belongs_to :trip,   Trip
   end

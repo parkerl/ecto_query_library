@@ -5,7 +5,7 @@ defmodule FishingSpot.Repo.Migrations.AddLocationTypesTable do
     create table(:location_types) do
       add :name,    :string
 
-      timestamps
+      timestamps()
     end
   end
 end

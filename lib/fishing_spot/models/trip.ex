@@ -3,7 +3,7 @@ defmodule FishingSpot.Trip do
   alias FishingSpot.LocationTrip
 
   schema "trips" do
-    timestamps
+    timestamps()
     field :start_date,  Ecto.Date
     field :end_date,    Ecto.Date
 

@@ -5,7 +5,7 @@ defmodule FishingSpot.Fisherman do
   use Ecto.Schema
 
   schema "fishermen" do
-    timestamps
+    timestamps()
     field :name
     field :date_of_birth, Ecto.Date
 

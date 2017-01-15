@@ -6,7 +6,7 @@ defmodule FishingSpot.Repo.Migrations.AddTripsTable do
       add :start_date,  :date
       add :end_date,    :date
 
-      timestamps
+      timestamps()
     end
   end
 end

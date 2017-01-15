@@ -17,7 +17,7 @@ defmodule FishingSpot.Data do
 
   def generate do
     Logger.disable(self())
-    _generate
+    _generate()
     Logger.enable(self())
   end
 

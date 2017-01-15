@@ -5,7 +5,7 @@ defmodule FishingSpot.Repo.Migrations.AddFishSpeciesTable do
     create table(:fish_species) do
       add :name,    :string
 
-      timestamps
+      timestamps()
     end
   end
 end

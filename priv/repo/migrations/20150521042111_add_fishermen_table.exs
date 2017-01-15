@@ -6,7 +6,7 @@ defmodule FishingSpot.Repo.Migrations.AddPeopleTable do
       add :name,          :string
       add :date_of_birth, :date
 
-      timestamps
+      timestamps()
     end
   end
 end

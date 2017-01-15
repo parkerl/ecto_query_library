@@ -4,7 +4,7 @@ defmodule FishingSpot.FishLanded do
   import Ecto.Changeset
 
   schema "fish_landed" do
-    timestamps
+    timestamps()
     field :date_and_time,    Ecto.DateTime
     field :weight,           :decimal
     field :length,           :decimal

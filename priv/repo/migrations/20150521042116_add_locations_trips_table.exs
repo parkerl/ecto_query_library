@@ -6,7 +6,7 @@ defmodule FishingSpot.Repo.Migrations.AddLocationsTripsTable do
       add :location_id, references(:locations)
       add :trip_id, references(:trips)
 
-      timestamps
+      timestamps()
     end
   end
 end

@@ -12,7 +12,7 @@ defmodule FishingSpot.Repo.Migrations.AddFishLandedTable do
       add :fly_type_id, references(:fly_types)
       add :fish_species_id, references(:fish_species)
 
-      timestamps
+      timestamps()
     end
 
     create index(:fish_landed, [:fisherman_id])
