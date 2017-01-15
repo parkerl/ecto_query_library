@@ -4,20 +4,19 @@ defmodule FishingSpot.Mixfile do
   def project do
     [app: :fishing_spot,
      version: "0.0.1",
-     elixir: "~> 1.0",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     aliases: aliases,
-    ]
+     deps: deps(),
+     aliases: aliases()]
   end
 
   # Configuration for the OTP application
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :postgrex, :ecto],
-     mod: {FishingSpot, []}]
+    [mod: {FishingSpot, []},
+     extra_applications: [:logger]]
   end
 
   # Dependencies can be Hex packages:
@@ -30,10 +29,8 @@ defmodule FishingSpot.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [
-      {:postgrex, ">= 0.9.1"},
-      {:ecto, git: "https://github.com/elixir-lang/ecto.git"}
-    ]
+    [{:postgrex, "~> 0.13"},
+     {:ecto, "~> 2.1.0"}]
   end
 
   defp aliases do
