@@ -103,13 +103,13 @@ defmodule FishingSpot.Data do
     end)
 
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: mark.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: mark.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: kirk.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: kirk.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: lew.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: lew.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
 
 
     Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
@@ -118,21 +118,21 @@ defmodule FishingSpot.Data do
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, _trips, fish_types) do
-    :random.seed(:erlang.system_time)
+    :rand.seed(:exs64)
     fisherman           = Enum.shuffle(fishermen                 ) |> List.first
     fisherman           = Repo.preload(fisherman, :trips         )
     location            = Enum.shuffle(locations                 ) |> List.first
     fly                 = Enum.shuffle(flies                     ) |> List.first
     trip                = Enum.shuffle(fisherman.trips           ) |> List.first
     fish                = Enum.shuffle(fish_types                ) |> List.first
-    length              = Decimal.new(:random.uniform(max_length ) )
-    weight              = Decimal.new(:random.uniform(max_weight ) )
+    length              = Decimal.new(:rand.uniform(max_length ) )
+    weight              = Decimal.new(:rand.uniform(max_weight ) )
 
     %Ecto.Date{year: year, month: month, day: trip_start} = trip.start_date
     %Ecto.Date{day: trip_end}                             = trip.end_date
 
     trip_length               = trip_end - trip_start
-    day_caught                = :random.uniform(trip_length)
+    day_caught                = :rand.uniform(trip_length)
     date_caught               = %Ecto.Date{year: year, month: month, day: trip_start + day_caught}
     date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.local())
 
