@@ -112,9 +112,9 @@ defmodule FishingSpot.Data do
     Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
 
 
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, _trips, fish_types) do
