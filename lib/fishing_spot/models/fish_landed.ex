@@ -5,7 +5,7 @@ defmodule FishingSpot.FishLanded do
 
   schema "fish_landed" do
     timestamps()
-    field :date_and_time,    Ecto.DateTime
+    field :date_and_time,    :naive_datetime
     field :weight,           :decimal
     field :length,           :decimal
 

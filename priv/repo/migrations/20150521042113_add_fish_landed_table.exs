@@ -3,7 +3,7 @@ defmodule FishingSpot.Repo.Migrations.AddFishLandedTable do
 
   def change do
     create table(:fish_landed) do
-      add :date_and_time,    :datetime
+      add :date_and_time,    :naive_datetime
       add :weight,           :decimal
       add :length,           :decimal
 

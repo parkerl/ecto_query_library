@@ -7,7 +7,7 @@ defmodule FishingSpot.Fisherman do
   schema "fishermen" do
     timestamps()
     field :name
-    field :date_of_birth, Ecto.Date
+    field :date_of_birth, :date
 
     has_many :fishermen_trips, FishermanTrip
     has_many :trips, through: [:fishermen_trips, :trip]
