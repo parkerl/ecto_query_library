@@ -3,7 +3,7 @@ defmodule FishingSpot.Account do
   import Ecto.Changeset
 
   schema "accounts" do
-    timestamps
+    timestamps()
     field :identifier, :string
     field :name,       :string
   end

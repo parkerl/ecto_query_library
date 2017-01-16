@@ -4,6 +4,6 @@ defmodule FishingSpot.Test do
   @primary_key {:bigid, :id, autogenerate: true}
 
   schema "tests" do
-    timestamps
+    timestamps()
   end
 end

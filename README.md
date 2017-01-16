@@ -1,18 +1,18 @@
-This is basically the TL;DR for my Diving into Ecto series. I always hate having to skim a long blog post looking for a quick answer, and I know you do too. With that in mind I'm going to make this post a list of common and not so common queries you can do with Ecto. I will keep it up-to-date as I discover more interesting queries and ways of using Ecto. 
+This is basically the TL;DR for my Diving into Ecto series. I always hate having to skim a long blog post looking for a quick answer, and I know you do too. With that in mind I'm going to make this post a list of common and not so common queries you can do with Ecto. I will keep it up-to-date as I discover more interesting queries and ways of using Ecto.
 
-The repo with this post reproduced in the README can be found at [https://github.com/parkerl/ecto_query_library](https://github.com/parkerl/ecto_query_library). The queries below can be found in a usable form in `lib/fishing_spot/queries.ex`. If you find something incorrect please open a pull request. I would like to make this a community resource rather than my personal toolbox. 
+The repo with this post reproduced in the README can be found at [https://github.com/parkerl/ecto_query_library](https://github.com/parkerl/ecto_query_library). The queries below can be found in a usable form in `lib/fishing_spot/queries.ex`. If you find something incorrect please open a pull request. I would like to make this a community resource rather than my personal toolbox.
 
 For the full story behind this project and the queries start here [Diving into Ecto: Part 1](http://www.glydergun.com/diving-into-ecto/).
 
 # Versions
-_The query library is currently built using the following setup. Some features are only avaiable on Ecto master. I will strive to indicate which queries will only run on master._
+_The query library is currently built using the following setup._
 
- - Elixir 1.2
- - Ecto master
+ - Elixir 1.4
+ - Ecto 2.1
  - Postgres 9.4
- 
+
 # Table of Contents
- 
+
 - [Select Styles](#selects)
 - [Select Distinct](#select_distinct)
 - [Distinct on Expression](#distinct_expression)
@@ -79,7 +79,7 @@ Repo.all(
   trips: #Ecto.Association.NotLoaded<association :trips is not loaded>,
   updated_at: #Ecto.DateTime<2015-09-29T12:05:05Z>},
 
-# Selects only the given fields. Returns a list of lists. 
+# Selects only the given fields. Returns a list of lists.
 Repo.all(
   from fisherman in Fisherman,
   select: [fisherman.name, fisherman.date_of_birth]
@@ -89,7 +89,7 @@ Repo.all(
 [["Mark", #Ecto.Date<1970-01-02>], ["Kirk", #Ecto.Date<1978-03-05>],
  ["Joe", #Ecto.Date<1973-10-15>], ["Lew", #Ecto.Date<1976-01-05>]]
 
-# Selects only the given fields. Returns a list of tuples. 
+# Selects only the given fields. Returns a list of tuples.
 Repo.all(
   from fisherman in Fisherman,
   select: { fisherman.name, fisherman.date_of_birth }
@@ -99,7 +99,7 @@ Repo.all(
 [{"Mark", #Ecto.Date<1970-01-02>}, {"Kirk", #Ecto.Date<1978-03-05>},
  {"Joe", #Ecto.Date<1973-10-15>}, {"Lew", #Ecto.Date<1976-01-05>}]
 
-# Selects only the given fields. Returns a list of maps with data in the given keys. 
+# Selects only the given fields. Returns a list of maps with data in the given keys.
 Repo.all(
   from fisherman in Fisherman,
   select: %{ fisherman_name: fisherman.name, fisherman_dob: fisherman.date_of_birth }
@@ -122,7 +122,7 @@ distinct: true
 12:18:21.346 [debug] SELECT DISTINCT f0."weight" FROM "fish_landed" AS f0 [] OK query=9.5ms decode=3.0ms
 ```
 
-# <a name="distinct_expression"></a>Distinct On Expression 
+# <a name="distinct_expression"></a>Distinct On Expression
 
 ```elixir
 from fish in FishLanded,
@@ -152,7 +152,7 @@ distinct: fish.weight,
 order_by: fish.date_and_time
 
 
-12:37:15.371 [debug] SELECT DISTINCT ON (f0."weight") f0."id", f0."inserted_at", f0."updated_at", f0."date_and_time", f0."weight", f0."length", f0."fisherman_id", f0."location_id", f0."fly_type_id", f0."fish_species_id" FROM "fish_landed" AS f0 
+12:37:15.371 [debug] SELECT DISTINCT ON (f0."weight") f0."id", f0."inserted_at", f0."updated_at", f0."date_and_time", f0."weight", f0."length", f0."fisherman_id", f0."location_id", f0."fly_type_id", f0."fish_species_id" FROM "fish_landed" AS f0
 ORDER BY f0."weight", f0."date_and_time" [] OK query=4.9ms decode=0.2ms
 
 [%FishingSpot.FishLanded{__meta__: #Ecto.Schema.Metadata<:loaded>,
@@ -291,7 +291,7 @@ _Demonstrates interpolating the result of one query into another._
  Repo.all(
    from fish in FishLanded,
    join: fisherman in assoc(fish, :fisherman),
-   where: fish.length == ^big_fish, 
+   where: fish.length == ^big_fish,
    select: [fish.length, fisherman.name]
  )
 ```
@@ -343,20 +343,20 @@ _Demonstrates the use of a keyword list for generating where clauses. Values are
       from fisherman in Fisherman,
       where: [name: "Lew", date_of_birth: ^date]
     )
-    
-    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
-    FROM "fishermen" AS f0 
-    WHERE ((f0."name" = 'Lew') 
-      AND (f0."date_of_birth" = $1)) 
+
+    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth"
+    FROM "fishermen" AS f0
+    WHERE ((f0."name" = 'Lew')
+      AND (f0."date_of_birth" = $1))
       [{1976, 1, 5}]
 
     where(Fisherman, [name: "Lew", date_of_birth: ^date]) |> Repo.all
-    
-    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
-    FROM "fishermen" AS f0 
-    WHERE ((f0."name" = 'Lew') 
-      AND (f0."date_of_birth" = $1)) 
-      [{1976, 1, 5}] 
+
+    => SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth"
+    FROM "fishermen" AS f0
+    WHERE ((f0."name" = 'Lew')
+      AND (f0."date_of_birth" = $1))
+      [{1976, 1, 5}]
 ```
 
 # <a name="keyword_another_model"></a>Keyword Where Referencing Another Model
@@ -367,15 +367,15 @@ _Demonstrates referencing another model in a keyword where clause. Also shows th
 join(Fisherman, :inner, [], fish_landed in FishLanded)
   |> where([fisherman, fish_landed], [name: "Lew", date_of_birth: ^date, id: fish_landed.fisherman_id])
   |> Repo.all
-  
-=> SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth" 
-FROM "fishermen" AS f0 
-INNER JOIN "fish_landed" AS f1 ON TRUE 
-WHERE (((f0."name" = 'Lew') 
- AND (f0."date_of_birth" = $1)) 
- AND (f0."id" = f1."fisherman_id")) 
- 
-[{1976, 1, 5}] 
+
+=> SELECT f0."id", f0."inserted_at", f0."updated_at", f0."name", f0."date_of_birth"
+FROM "fishermen" AS f0
+INNER JOIN "fish_landed" AS f1 ON TRUE
+WHERE (((f0."name" = 'Lew')
+ AND (f0."date_of_birth" = $1))
+ AND (f0."id" = f1."fisherman_id"))
+
+[{1976, 1, 5}]
 ```
 
 # <a name="where_in"></a>Where with In Clause
@@ -403,7 +403,7 @@ select: %{biggest_fish: max(fish.length), fisherman: fisherman.name}
 
 # <a name="complex_where"></a>Complex Muti-join Multi-where
 
-_Demonstrates joins, sub-querying and using map syntax in the select. 
+_Demonstrates joins, sub-querying and using map syntax in the select.
 Uses the `date_add/3` function. Demonstrates how to accomplish a "between" where clause._
 
 ```elixir
@@ -470,7 +470,7 @@ select: %{
 
 # <a name="partial_preload"></a>Partial-preloading
 
-_Demonstrates how to select only parts of a join model in a preload. 
+_Demonstrates how to select only parts of a join model in a preload.
 Uses both map and list select syntax._
 
 ```elixir
@@ -545,23 +545,23 @@ _Demonstrates how to work with schemas other than "public" in Postgres._
       timestamps
     end
   end
-  
+
 # Inserting data
     Repo.insert(
-      Ecto.Model.put_meta( 
-      %Account{ identifier: "lew@example.com",  name: "Lew"  }, 
+      Ecto.Model.put_meta(
+      %Account{ identifier: "lew@example.com",  name: "Lew"  },
       prefix: "users"
       )
     )
     Repo.insert(
       Ecto.Model.put_meta(
-       %Account{ identifier: "mark@example.com", name: "Mark" }, 
-       prefix: "users" 
+       %Account{ identifier: "mark@example.com", name: "Mark" },
+       prefix: "users"
       )
     )
     Repo.insert(
      Ecto.Model.put_meta(
-       %Account{ identifier: "john@example.com", name: "John" }, 
+       %Account{ identifier: "john@example.com", name: "John" },
        prefix: "users"
      )
     )

@@ -17,7 +17,7 @@ defmodule FishingSpot.Data do
 
   def generate do
     Logger.disable(self())
-    _generate
+    _generate()
     Logger.enable(self())
   end
 
@@ -43,22 +43,22 @@ defmodule FishingSpot.Data do
     lake         = Repo.insert! %LocationType{  name: "Lake"         }
     pond         = Repo.insert! %LocationType{  name: "Pond"         }
     spring_creek = Repo.insert! %LocationType{  name: "Spring Creek" }
-    stream       = Repo.insert! %LocationType{  name: "Stream"       }
+    _stream      = Repo.insert! %LocationType{  name: "Stream"       }
     river        = Repo.insert! %LocationType{  name: "River"        }
     tail_water   = Repo.insert! %LocationType{  name: "Tail Water"   }
 
-    mark = Repo.insert! %Fisherman{ name: "Mark",  date_of_birth: %Ecto.Date{ year: 1970,  month: 1,   day:  2 }}
-    kirk = Repo.insert! %Fisherman{ name: "Kirk",  date_of_birth: %Ecto.Date{ year: 1978,  month: 3,   day:  5 }}
-    joe  = Repo.insert! %Fisherman{ name: "Joe",   date_of_birth: %Ecto.Date{ year: 1973,  month: 10,  day: 15 }}
-    lew  = Repo.insert! %Fisherman{ name: "Lew",   date_of_birth: %Ecto.Date{ year: 1976,  month: 1,   day:  5 }}
+    mark = Repo.insert! %Fisherman{ name: "Mark",  date_of_birth: ~D[1970-01-01] }
+    kirk = Repo.insert! %Fisherman{ name: "Kirk",  date_of_birth: ~D[1978-03-05] }
+    joe  = Repo.insert! %Fisherman{ name: "Joe",   date_of_birth: ~D[1973-10-15] }
+    lew  = Repo.insert! %Fisherman{ name: "Lew",   date_of_birth: ~D[1976-01-05] }
 
     fishermen = [mark, kirk, joe, lew]
 
-    trip1 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2012,   month: 6,    day: 5  },   end_date: %Ecto.Date{  year: 2012,   month: 6,    day: 12 } }
-    trip2 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2012,   month: 10,   day: 15 },  end_date: %Ecto.Date{   year: 2012,   month: 10,   day: 20 } }
-    trip3 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2013,   month: 9,    day: 1  },   end_date: %Ecto.Date{  year: 2013,   month: 9,    day: 2  } }
-    trip4 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2014,   month: 7,    day: 15 },  end_date: %Ecto.Date{   year: 2014,   month: 7,    day: 20 } }
-    trip5 = Repo.insert! %Trip{  start_date: %Ecto.Date{  year: 2014,   month: 8,    day: 8  },   end_date: %Ecto.Date{  year: 2014,   month: 8,    day: 18 } }
+    trip1 = Repo.insert! %Trip{ start_date: ~D[2012-06-05], end_date: ~D[2012-06-12] }
+    trip2 = Repo.insert! %Trip{ start_date: ~D[2012-10-15], end_date: ~D[2012-10-20] }
+    trip3 = Repo.insert! %Trip{ start_date: ~D[2013-09-01], end_date: ~D[2013-09-02] }
+    trip4 = Repo.insert! %Trip{ start_date: ~D[2014-07-15], end_date: ~D[2014-07-20] }
+    trip5 = Repo.insert! %Trip{ start_date: ~D[2014-08-08], end_date: ~D[2014-08-18] }
 
     trips = [trip1, trip2, trip3, trip4, trip5]
 
@@ -103,38 +103,38 @@ defmodule FishingSpot.Data do
     end)
 
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: mark.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: mark.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: kirk.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: kirk.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: lew.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: lew.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
     attributes = get_fish_attributes(30, 5, fishermen, locations, flies, trips, fish_types)
-    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
+    Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:rand.uniform(50)), length: Decimal.new(:rand.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
 
 
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
   end
 
-  def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
-    :random.seed(:erlang.system_time)
+  def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, _trips, fish_types) do
+    :rand.seed(:exs64)
     fisherman           = Enum.shuffle(fishermen                 ) |> List.first
     fisherman           = Repo.preload(fisherman, :trips         )
     location            = Enum.shuffle(locations                 ) |> List.first
     fly                 = Enum.shuffle(flies                     ) |> List.first
     trip                = Enum.shuffle(fisherman.trips           ) |> List.first
     fish                = Enum.shuffle(fish_types                ) |> List.first
-    length              = Decimal.new(:random.uniform(max_length ) )
-    weight              = Decimal.new(:random.uniform(max_weight ) )
+    length              = Decimal.new(:rand.uniform(max_length ) )
+    weight              = Decimal.new(:rand.uniform(max_weight ) )
 
-    %Ecto.Date{year: year, month: month, day: trip_start} = trip.start_date
-    %Ecto.Date{day: trip_end}                             = trip.end_date
+    %Date{year: year, month: month, day: trip_start} = trip.start_date
+    %Date{day: trip_end}                             = trip.end_date
 
-    trip_length               = trip_end - trip_start
-    day_caught                = :random.uniform(trip_length)
-    date_caught               = %Ecto.Date{year: year, month: month, day: trip_start + day_caught}
-    date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.local())
+    trip_length                 = trip_end - trip_start
+    day_caught                  = :rand.uniform(trip_length)
+    {:ok, date_caught}          = Date.new(year, month, trip_start + day_caught)
+    {:ok, date_and_time_caught} = NaiveDateTime.new(date_caught, Time.utc_now())
 
     %RandomizedAttributes{
       fisherman:    fisherman,
