@@ -2,7 +2,7 @@ defmodule FishingSpot.FishSpecies do
   use Ecto.Schema
 
   schema "fish_species" do
-    timestamps
+    timestamps()
     field :name
   end
 end

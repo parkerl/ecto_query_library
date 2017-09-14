@@ -4,7 +4,7 @@ defmodule FishingSpot.Location do
   alias FishingSpot.LocationType
 
   schema "locations" do
-    timestamps
+    timestamps()
     field :name
     field :altitude,  :integer
     field :lat,       :decimal

@@ -5,7 +5,7 @@ defmodule FishingSpot.Repo.Migrations.AddFlyTypesTable do
     create table(:fly_types) do
       add :name,    :string
 
-      timestamps
+      timestamps()
     end
   end
 end

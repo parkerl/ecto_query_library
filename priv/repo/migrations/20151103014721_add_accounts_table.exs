@@ -8,7 +8,7 @@ defmodule FishingSpot.Repo.Migrations.AddAccountsTable do
       add :identifier, :string
       add :name,       :string
 
-      timestamps
+      timestamps()
     end
   end
 end

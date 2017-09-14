@@ -9,7 +9,7 @@ defmodule FishingSpot.Repo.Migrations.AddLocationsTable do
       add :long,      :decimal
       add :location_type_id, references(:location_types)
 
-      timestamps
+      timestamps()
     end
   end
 end
