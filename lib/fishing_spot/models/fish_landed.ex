@@ -1,5 +1,5 @@
 defmodule FishingSpot.FishLanded do
-  alias FishingSpot.{Fisherman, FishSpecies, FlyType}
+  alias FishingSpot.{Fisherman, FishSpecies, FlyType, Location}
   use Ecto.Schema
   import Ecto.Changeset
 

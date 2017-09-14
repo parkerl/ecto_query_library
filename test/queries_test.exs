@@ -1,5 +1,5 @@
 defmodule FishingSpot.QueriesTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   import ExUnit.CaptureIO
   ExUnit.configure(trace: true)
 
@@ -8,9 +8,11 @@ defmodule FishingSpot.QueriesTest do
   alias FishingSpot.FishLanded
 
   setup do
+   :ok = Ecto.Adapters.SQL.Sandbox.checkout(Repo)
    Repo.insert(%FishLanded{length: Decimal.new(1.0)})
    :ok
   end
+
   queries =  [
     &Queries.all_fishermen/0,
     &Queries.ordered_fishermen/0,

@@ -11,6 +11,7 @@ defmodule FishingSpot.Fisherman do
 
     has_many :fishermen_trips, FishermanTrip
     has_many :trips, through: [:fishermen_trips, :trip]
+    has_many :trip_locations, through: [:trips, :locations]
     has_many :fish_landed, FishLanded
   end
 end

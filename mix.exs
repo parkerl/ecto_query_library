@@ -7,8 +7,8 @@ defmodule FishingSpot.Mixfile do
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     aliases: aliases,
+     deps: deps(),
+     aliases: aliases(),
     ]
   end
 
@@ -30,10 +30,9 @@ defmodule FishingSpot.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [
-      {:postgrex, ">= 0.9.1"},
-      {:ecto, git: "https://github.com/elixir-lang/ecto.git"}
-    ]
+    [{:postgrex, "~> 0.13"},
+     {:ecto, "~> 2.2"},
+     {:ex_doc, "~> 0.12", only: :dev}]
   end
 
   defp aliases do

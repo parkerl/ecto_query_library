@@ -112,9 +112,9 @@ defmodule FishingSpot.Data do
     Repo.insert %FishLanded{date_and_time: attributes.date_and_time_caught, weight: Decimal.new(:random.uniform(50)), length: Decimal.new(:random.uniform(100)), fisherman_id: joe.id, location_id: attributes.location.id, fly_type_id: attributes.fly.id, fish_species_id: attributes.fish.id}
 
 
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
-    Repo.insert Ecto.Model.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "lew@example.com",  name: "Lew"  }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "mark@example.com", name: "Mark" }, prefix: "users" )
+    Repo.insert Ecto.put_meta( %Account{ identifier: "john@example.com", name: "John" }, prefix: "users" )
   end
 
   def get_fish_attributes(max_length, max_weight, fishermen, locations, flies, trips, fish_types) do
@@ -134,7 +134,7 @@ defmodule FishingSpot.Data do
     trip_length               = trip_end - trip_start
     day_caught                = :random.uniform(trip_length)
     date_caught               = %Ecto.Date{year: year, month: month, day: trip_start + day_caught}
-    date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.local())
+    date_and_time_caught      = Ecto.DateTime.from_date_and_time(date_caught, Ecto.Time.utc)
 
     %RandomizedAttributes{
       fisherman:    fisherman,

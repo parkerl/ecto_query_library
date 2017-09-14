@@ -5,7 +5,13 @@ defmodule FishingSpot.Queries do
   alias FishingSpot.Account
 
   import Ecto.Query
+  @moduledoc """
+  Welcome to the Ecto Query Library!
+  """
 
+  @doc """
+  Selects all `Fisherman` records from the database.
+  """
   def all_fishermen do
     Repo.all(
       from fisherman in Fisherman
@@ -207,7 +213,7 @@ defmodule FishingSpot.Queries do
   end
 
   def biggest_fish_details do
-    Repo.first(
+    Repo.one(
       from fish in FishLanded,
       join: fly_type in assoc(fish, :fly_type),
       join: fish_species in assoc(fish, :fish_species),
@@ -331,7 +337,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    Repo.first(query).fisherman.fish_landed |> IO.inspect
+    Repo.one(query).fisherman.fish_landed |> IO.inspect
 
     query = Fisherman
     |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
@@ -339,7 +345,7 @@ defmodule FishingSpot.Queries do
     |> select([fisherman, fish], %{fisherman: fisherman, length: fish.length})
     |> preload([fisherman, fish], [fish_landed: fish])
 
-    fisherman = Repo.first(query) |> List.first
+    fisherman = Repo.one(query) |> List.first
     fisherman.fish_landed |> IO.inspect
   end
 
@@ -397,44 +403,19 @@ defmodule FishingSpot.Queries do
     )
   end
 
-  def comp do
+  def composed_keyword_queries do
     query = from fish in FishLanded,
     join: fisherman in assoc(fish, :fisherman),
-    where: fish.length > 2
+    where: fish.length > 10
 
     query = from fish in query,
-     join: fly in assoc(fish, :fly_type),
-     where: fly.name == "Muddler Minnow"
+    join: fly in assoc(fish, :fly_type),
+    join: fisherman in assoc(fish, :fisherman),
+    where: fly.name == "Muddler Minnow",
+    where: fisherman.name == "Mark",
+    where: fish.weight > 10,
+    select: [fisherman.name]
 
-     Repo.all query
-
-     # query = Fisherman
-     # |> join(:inner, [fisherman], fish in assoc(fisherman, :fish_landed))
-
-     # big_fish = query
-     # |> where([fish], fish.length > 2)
-
-     # type = :fly_type
-     # big_fish_on_muddler = query
-     # |> join(:inner, [fish], fly in assoc(fish, :fly_type))
-     # |> where([fish, fly], fly.name == "Muddler Minnow")
-
-     # Author
-     # |> popular_posts
-     # |> with_tags(tags)
-
-     # def popular_posts(query) do
-     #   query
-     #   |> join(:inner, [author], post in assoc(author, :post))
-     #   |> join(:inner, [author, post], comment in assoc(post, :comments))
-     #   |> where([author, post, comment],  comment.likes == 4)
-     # end
-
-     # def posts_with_tags(query, tags) do
-     #   query
-     #   |> join(:inner, [post], a in assoc(post, :tags))
-     #   |> where([post, tags],  tags.tag in(^tags))
-     # end
-
+    Repo.all query
   end
 end
