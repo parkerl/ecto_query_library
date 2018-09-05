@@ -4,7 +4,7 @@ defmodule FishingSpot.Repo.Migrations.AddPeopleTripsTable do
   def change do
     create table(:fishermen_trips) do
       add :fisherman_id, references(:fishermen)
-      add :trip_id, references(:trips)
+      add :trip_id,      references(:trips)
 
       timestamps()
     end

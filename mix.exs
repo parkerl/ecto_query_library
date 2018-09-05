@@ -8,7 +8,8 @@ defmodule FishingSpot.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      deps: deps(),
-     aliases: aliases()]
+     aliases: aliases(),
+     docs: [earmark_plugins: %{"query" => FishingSpot.Doccer}]]
   end
 
   # Configuration for the OTP application
@@ -16,7 +17,7 @@ defmodule FishingSpot.Mixfile do
   # Type `mix help compile.app` for more information
   def application do
     [mod: {FishingSpot, []},
-     extra_applications: [:logger]]
+     extra_applications: [:logger, :faker]]
   end
 
   # Dependencies can be Hex packages:
@@ -31,7 +32,8 @@ defmodule FishingSpot.Mixfile do
   defp deps do
     [{:postgrex, "~> 0.13"},
      {:ecto, "~> 2.2"},
-     {:ex_doc, "~> 0.12", only: :dev}]
+     {:ex_doc, path: "../ex_doc"},
+     {:faker, "~> 0.9"}]
   end
 
   defp aliases do

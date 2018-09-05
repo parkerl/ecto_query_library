@@ -52,6 +52,14 @@ defmodule FishingSpot.Data do
     joe  = Repo.insert! %Fisherman{ name: "Joe",   date_of_birth: ~D[1973-10-15] }
     lew  = Repo.insert! %Fisherman{ name: "Lew",   date_of_birth: ~D[1976-01-05] }
 
+    Enum.each(1..1000, fn(_) ->
+      Repo.insert! %Fisherman{
+        name: Faker.Name.name,
+        date_of_birth: Faker.Date.date_of_birth
+          }
+    end
+    )
+
     fishermen = [mark, kirk, joe, lew]
 
     trip1 = Repo.insert! %Trip{ start_date: ~D[2012-06-05], end_date: ~D[2012-06-12] }

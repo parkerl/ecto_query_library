@@ -24,5 +24,6 @@ use Mix.Config
 
 config :fishing_spot,
   ecto_repos: [FishingSpot.Repo]
+config :ex_doc, :markdown_processor, FishingSpot.Doccer
 
 import_config "#{Mix.env}.exs"

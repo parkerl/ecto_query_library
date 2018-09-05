@@ -4,12 +4,13 @@ fonts/icomoon.eot
 fonts/icomoon.svg
 fonts/icomoon.ttf
 fonts/icomoon.woff
-dist/sidebar_items-6b1d499fdf.js
+dist/sidebar_items-0fbf0911f5.js
 api-reference.html
 search.html
 404.html
 FishingSpot.html
 FishingSpot.Account.html
+FishingSpot.Doccer.html
 FishingSpot.FishLanded.html
 FishingSpot.FishSpecies.html
 FishingSpot.Fisherman.html
@@ -19,7 +20,7 @@ FishingSpot.Location.html
 FishingSpot.LocationTrip.html
 FishingSpot.LocationType.html
 FishingSpot.Queries.html
+FishingSpot.QueryExamples.Selects.html
 FishingSpot.Repo.html
-FishingSpot.Test.html
 FishingSpot.Trip.html
 index.html

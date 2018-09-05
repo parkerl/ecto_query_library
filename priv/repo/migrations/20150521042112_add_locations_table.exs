@@ -3,10 +3,10 @@ defmodule FishingSpot.Repo.Migrations.AddLocationsTable do
 
   def change do
     create table(:locations) do
-      add :name,      :string
-      add :altitude,  :integer
-      add :lat,       :decimal
-      add :long,      :decimal
+      add :name,             :string
+      add :altitude,         :integer
+      add :lat,              :decimal
+      add :long,             :decimal
       add :location_type_id, references(:location_types)
 
       timestamps()
